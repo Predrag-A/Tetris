@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris_Novi.Klase;
+using Tetris_Novi.Classes;
 
 namespace Tetris_Novi.User_control
 {
@@ -26,7 +27,7 @@ namespace Tetris_Novi.User_control
                 {
                     if (Grid.ObjekatKlaseGrid.MatricaProvera[i][j])
                     {
-                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.MatricaBoja[i][j], Grid.ObjekatKlaseGrid.Matrica[i][j]);
+                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.Matrix[i,j].Brush, Grid.ObjekatKlaseGrid.Matrix[i,j].Rect);
                     }
                 }
             }
@@ -37,8 +38,13 @@ namespace Tetris_Novi.User_control
                 {
                     if (!Grid.ObjekatKlaseGrid.MatricaProvera[i][j])
                     {
-                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.MatricaBoja[i][j], Grid.ObjekatKlaseGrid.Matrica[i][j]);
-                        e.Graphics.DrawRectangle(new Pen(Color.Crimson), Grid.ObjekatKlaseGrid.Matrica[i][j]);
+                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.Matrix[i, j].Brush, Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);
+
+                        //e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.MatricaBoja[i][j], Grid.ObjekatKlaseGrid.Matrica[i][j]);
+                        //e.Graphics.DrawRectangle(new Pen(Color.Crimson), Grid.ObjekatKlaseGrid.Matrica[i][j]);
+
+                        e.Graphics.DrawRectangle(new Pen(Settings.Instance.TetrisBorder), Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);
+
                     }
                 }
             }

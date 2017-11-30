@@ -10,6 +10,7 @@ namespace Tetris_Novi.Klase
 {
     public class Grid
     {
+        Square[,] _matrix;
         Rectangle[][] _matrica;
         int _n;
         int _m;
@@ -116,6 +117,8 @@ namespace Tetris_Novi.Klase
 
         public Rectangle[][] Matrica { get { return _matrica; } set { _matrica = value; } }
 
+        public Square[,] Matrix { get { return _matrix; } set { _matrix = value; } }
+
         private Grid ()
         {
             _size = new Size(Settings.Instance.SingleSquareWidth, Settings.Instance.SingleSquareWidth);
@@ -125,6 +128,7 @@ namespace Tetris_Novi.Klase
             Matrica = new Rectangle[N][];
             MatricaProvera = new bool[N][];
             MatricaBoja = new SolidBrush[N][];
+            Matrix = new Square[N, M];
             for(int i=0;i<N;i++)
             {
                 Matrica[i] = new Rectangle[M];
@@ -138,6 +142,8 @@ namespace Tetris_Novi.Klase
                     Matrica[i][j] = new Rectangle(new Point(j * _size.Height, i * _size.Width),_size);
                     MatricaProvera[i][j] = false;
                     MatricaBoja[i][j] = PrimarnaCetka;
+
+                    Matrix[i, j] = new Square(new Point(j * _size.Height, i * _size.Width), _size, PrimarnaCetka);
                 }
             }
         }
@@ -154,6 +160,9 @@ namespace Tetris_Novi.Klase
                     {
                         MatricaProvera[i + icordinata][j + jcordinata] = true;
                         MatricaBoja[i + icordinata][j + jcordinata] = new SolidBrush(obj.Boja);
+
+                        Matrix[i + icordinata,j + jcordinata].Filled = true;
+                        Matrix[i + icordinata,j + jcordinata].Brush = new SolidBrush(obj.Boja);
                     }
                 }
             }
@@ -171,6 +180,9 @@ namespace Tetris_Novi.Klase
                     {
                         MatricaProvera[i + icoordinata][j + jcoordinata] = false;
                         MatricaBoja[i + icoordinata][j + jcoordinata] = PrimarnaCetka;
+
+                        Matrix[i + icoordinata, j + jcoordinata].Filled = false;
+                        Matrix[i + icoordinata, j + jcoordinata].Brush = PrimarnaCetka;
                     }
                 }
             }
@@ -238,7 +250,7 @@ namespace Tetris_Novi.Klase
                 {
                     if(obj.Matrica[i][j])
                     {
-                        if (MatricaProvera[i + icoordinata][j + jcoordinata] == true)
+                        if (Matrix[i+icoordinata,j+jcoordinata].Filled)
                             return true;
                     }
                 }
@@ -255,7 +267,7 @@ namespace Tetris_Novi.Klase
             {
                 bool brisati = true;
                 for (int j = M - 1; j >= 0; j--)
-                    if (MatricaProvera[i][j] == false)
+                    if (Matrix[i,j].Filled == false)
                         brisati = false;
                 if(brisati)
                 {
@@ -264,14 +276,14 @@ namespace Tetris_Novi.Klase
                     {
                         for(int l=M-1;l>=0;l--)
                         {
-                            MatricaProvera[k][l] = MatricaProvera[k - 1][l];
-                            MatricaBoja[k][l] = MatricaBoja[k - 1][l];
+                            Matrix[k,l].Filled = Matrix[k - 1,l].Filled;
+                            Matrix[k,l].Brush = Matrix[k - 1,l].Brush;
                         }
                     }
                     for(int k=M-1;k>=0;k--)
                     {
-                        MatricaProvera[0][k] = false;
-                        MatricaBoja[0][k] = PrimarnaCetka;
+                        Matrix[0,k].Filled = false;
+                        Matrix[0,k].Brush = PrimarnaCetka;
                     }
                     i++;
                 }

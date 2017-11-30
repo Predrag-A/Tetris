@@ -98,7 +98,7 @@ namespace Tetris_Novi.Classes
 
             squareWidth = 30;
             columns = 10;
-            rows = 20;
+            rows = 17;
 
             startLevel = 1;
         }
