@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris_Novi.Klase;
 using Tetris_Novi.Classes;
+using Tetris_Novi.Forms;
 
 namespace Tetris_Novi.User_control
 {
@@ -18,14 +19,21 @@ namespace Tetris_Novi.User_control
         {
             InitializeComponent();
         }
+        
+        public DialogResult ShowOptions()
+        {
+            OptionsForm frm = new OptionsForm(Grid.ObjekatKlaseGrid.Settings);
+            return frm.ShowDialog();
+        }
 
-       public void paint(PaintEventArgs e)
+
+        public void paint(PaintEventArgs e)
         {
             for (int i = 0; i < Grid.ObjekatKlaseGrid.N; i++)
             {
                 for (int j = 0; j < Grid.ObjekatKlaseGrid.M; j++)
                 {
-                    if (Grid.ObjekatKlaseGrid.MatricaProvera[i][j])
+                    if (Grid.ObjekatKlaseGrid.Matrix[i,j].Filled)
                     {
                         e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.Matrix[i,j].Brush, Grid.ObjekatKlaseGrid.Matrix[i,j].Rect);
                     }
@@ -36,14 +44,10 @@ namespace Tetris_Novi.User_control
             {
                 for (int j = 0; j < Grid.ObjekatKlaseGrid.M; j++)
                 {
-                    if (!Grid.ObjekatKlaseGrid.MatricaProvera[i][j])
+                    if (!Grid.ObjekatKlaseGrid.Matrix[i,j].Filled)
                     {
-                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.Matrix[i, j].Brush, Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);
-
-                        //e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.MatricaBoja[i][j], Grid.ObjekatKlaseGrid.Matrica[i][j]);
-                        //e.Graphics.DrawRectangle(new Pen(Color.Crimson), Grid.ObjekatKlaseGrid.Matrica[i][j]);
-
-                        e.Graphics.DrawRectangle(new Pen(Settings.Instance.TetrisBorder), Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);
+                        e.Graphics.FillRectangle(Grid.ObjekatKlaseGrid.Matrix[i, j].Brush, Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);                        
+                        e.Graphics.DrawRectangle(new Pen(Grid.ObjekatKlaseGrid.Settings.TetrisBorder), Grid.ObjekatKlaseGrid.Matrix[i, j].Rect);
 
                     }
                 }

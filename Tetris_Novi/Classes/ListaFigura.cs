@@ -45,14 +45,14 @@ namespace Tetris_Novi.Klase
             _listaF.Clear();
             
             //Linemo i dodajemo u listu plavi pravugaonik
-            Shape line = new Shape(n1, Settings.Instance.LineColor);
+            Shape line = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.LineColor);
             for(int i=0;i<n1;i++)
             {
                 line.Matrica[i][line.GlavnaKordinataInt] = true;
             }
 
             //Linemo kocku popunjenu celu,veliku
-            Shape bigSquare = new Shape(n1, Settings.Instance.BigSquareColor);
+            Shape bigSquare = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.BigSquareColor);
             for(int i=0;i<n1;i++)
             {
                 for(int j=0;j<n1;j++)
@@ -62,18 +62,18 @@ namespace Tetris_Novi.Klase
             }
 
             //Linemo malu kockicu
-            Shape smallSquare = new Shape(n1, Settings.Instance.SmallSquareColor);
+            Shape smallSquare = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.SmallSquareColor);
             smallSquare.Matrica[smallSquare.GlavnaKordinataInt][smallSquare.GlavnaKordinataInt] = true;
 
             //Linemo Cross mali
-            Shape cross = new Shape(n1, Settings.Instance.CrossColor);
+            Shape cross = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.CrossColor);
             for (int i = 0; i < n1; i++)
                 cross.Matrica[i][cross.GlavnaKordinataInt] = true;
             for (int j = 0; j < n1; j++)
                 cross.Matrica[cross.GlavnaKordinataInt][j] = true;
 
             //Linemo crvenu figuru
-            Shape triangle = new Shape(n1, Settings.Instance.TriangleColor);
+            Shape triangle = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.TriangleColor);
             for(int i=0;i<n1;i++)
             {
                 triangle.Matrica[triangle.GlavnaKordinataInt][i] = true;

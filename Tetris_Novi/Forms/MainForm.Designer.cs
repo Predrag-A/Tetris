@@ -43,12 +43,12 @@
             this.pauzaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.izlazToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.leaderboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.lblPauzirano = new System.Windows.Forms.Label();
-            this.TetrisControl1 = new Tetris_Novi.User_control.TetrisControl();
-            this.leaderboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.TC = new Tetris_Novi.User_control.TetrisControl();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.msMeniIgrice.SuspendLayout();
             this.SuspendLayout();
@@ -159,7 +159,7 @@
             // 
             this.novaIgraToolStripMenuItem.Name = "novaIgraToolStripMenuItem";
             this.novaIgraToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.novaIgraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.novaIgraToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.novaIgraToolStripMenuItem.Text = "New Game";
             this.novaIgraToolStripMenuItem.Click += new System.EventHandler(this.novaIgraToolStripMenuItem_Click);
             // 
@@ -167,21 +167,35 @@
             // 
             this.pauzaToolStripMenuItem.Name = "pauzaToolStripMenuItem";
             this.pauzaToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.pauzaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pauzaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.pauzaToolStripMenuItem.Text = "Pause";
             this.pauzaToolStripMenuItem.Click += new System.EventHandler(this.pauzaToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
             // 
             // izlazToolStripMenuItem
             // 
             this.izlazToolStripMenuItem.Name = "izlazToolStripMenuItem";
-            this.izlazToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.izlazToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
             this.izlazToolStripMenuItem.Text = "Izlaz";
             this.izlazToolStripMenuItem.Click += new System.EventHandler(this.izlazToolStripMenuItem_Click);
+            // 
+            // leaderboardToolStripMenuItem
+            // 
+            this.leaderboardToolStripMenuItem.Name = "leaderboardToolStripMenuItem";
+            this.leaderboardToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
+            this.leaderboardToolStripMenuItem.Text = "Leaderboard";
+            this.leaderboardToolStripMenuItem.Click += new System.EventHandler(this.najboljiRezultatiToolStripMenuItem_Click);
+            // 
+            // settingsToolStripMenuItem
+            // 
+            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
+            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
+            this.settingsToolStripMenuItem.Text = "Settings";
+            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
             // timer1
             // 
@@ -213,27 +227,13 @@
             this.lblPauzirano.Text = "Pauzirano";
             this.lblPauzirano.Visible = false;
             // 
-            // TetrisControl1
+            // TC
             // 
-            this.TetrisControl1.BackColor = System.Drawing.Color.Transparent;
-            this.TetrisControl1.Location = new System.Drawing.Point(12, 27);
-            this.TetrisControl1.Name = "TetrisControl1";
-            this.TetrisControl1.Size = new System.Drawing.Size(314, 534);
-            this.TetrisControl1.TabIndex = 9;
-            // 
-            // leaderboardToolStripMenuItem
-            // 
-            this.leaderboardToolStripMenuItem.Name = "leaderboardToolStripMenuItem";
-            this.leaderboardToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
-            this.leaderboardToolStripMenuItem.Text = "Leaderboard";
-            this.leaderboardToolStripMenuItem.Click += new System.EventHandler(this.najboljiRezultatiToolStripMenuItem_Click);
-            // 
-            // settingsToolStripMenuItem
-            // 
-            this.settingsToolStripMenuItem.Name = "settingsToolStripMenuItem";
-            this.settingsToolStripMenuItem.Size = new System.Drawing.Size(61, 20);
-            this.settingsToolStripMenuItem.Text = "Settings";
-            this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
+            this.TC.BackColor = System.Drawing.Color.Transparent;
+            this.TC.Location = new System.Drawing.Point(12, 27);
+            this.TC.Name = "TC";
+            this.TC.Size = new System.Drawing.Size(314, 534);
+            this.TC.TabIndex = 9;
             // 
             // MainForm
             // 
@@ -246,7 +246,7 @@
             this.Controls.Add(this.pictureBox1);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.lblVreme);
-            this.Controls.Add(this.TetrisControl1);
+            this.Controls.Add(this.TC);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.lblTrenutniRezultat);
             this.Controls.Add(this.msMeniIgrice);
@@ -277,7 +277,7 @@
         private System.Windows.Forms.ToolStripMenuItem pauzaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem izlazToolStripMenuItem;
         private System.Windows.Forms.Timer timer1;
-        private User_control.TetrisControl TetrisControl1;
+        private User_control.TetrisControl TC;
         private System.Windows.Forms.Label lblNivo;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label1;

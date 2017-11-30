@@ -11,13 +11,11 @@ namespace Tetris_Novi.Klase
     public class Grid
     {
         Square[,] _matrix;
-        Rectangle[][] _matrica;
         int _n;
         int _m;
         Size _size; //velicina SmallSquare
-        bool[][] _matricaProvera; //matrica koja nam sluzi koja su polja popunjena
-        SolidBrush[][] _matricaBoja;//kako treva da boji
         SolidBrush _primarnaCetka;//boja za neobojena
+        Settings _settings;
 
         private static Grid _objekatKlaseGrid;
         
@@ -60,33 +58,7 @@ namespace Tetris_Novi.Klase
                 _size = value;
             }
         }
-
-        public bool[][] MatricaProvera
-        {
-            get
-            {
-                return _matricaProvera;
-            }
-
-            set
-            {
-                _matricaProvera = value;
-            }
-        }
-
-        public SolidBrush[][] MatricaBoja
-        {
-            get
-            {
-                return _matricaBoja;
-            }
-
-            set
-            {
-                _matricaBoja = value;
-            }
-        }
-
+        
         public SolidBrush PrimarnaCetka
         {
             get
@@ -113,40 +85,46 @@ namespace Tetris_Novi.Klase
             {
                 _objekatKlaseGrid = value;
             }
-        }
-
-        public Rectangle[][] Matrica { get { return _matrica; } set { _matrica = value; } }
-
+        }        
         public Square[,] Matrix { get { return _matrix; } set { _matrix = value; } }
+        internal Settings Settings { get { return _settings; } set { _settings = value; } }
+
 
         private Grid ()
         {
-            _size = new Size(Settings.Instance.SingleSquareWidth, Settings.Instance.SingleSquareWidth);
-            PrimarnaCetka = new SolidBrush(Settings.Instance.TetrisBackground);
-            N = Settings.Instance.Rows;
-            M = Settings.Instance.Columns;
-            Matrica = new Rectangle[N][];
-            MatricaProvera = new bool[N][];
-            MatricaBoja = new SolidBrush[N][];
+            Settings = new Settings();
+            _size = new Size(Settings.SingleSquareWidth, Settings.SingleSquareWidth);
+            PrimarnaCetka = new SolidBrush(Settings.TetrisBackground);
+            N = Settings.Rows;
+            M = Settings.Columns;
             Matrix = new Square[N, M];
-            for(int i=0;i<N;i++)
-            {
-                Matrica[i] = new Rectangle[M];
-                MatricaBoja[i] = new SolidBrush[M];
-                MatricaProvera[i] = new bool[M];
-            }
+
             for(int i=0;i<N;i++)
             {
                 for(int j=0;j<M;j++)
                 {
-                    Matrica[i][j] = new Rectangle(new Point(j * _size.Height, i * _size.Width),_size);
-                    MatricaProvera[i][j] = false;
-                    MatricaBoja[i][j] = PrimarnaCetka;
-
                     Matrix[i, j] = new Square(new Point(j * _size.Height, i * _size.Width), _size, PrimarnaCetka);
                 }
             }
         }
+
+        public void Resize()
+        {
+            _size = new Size(Settings.SingleSquareWidth, Settings.SingleSquareWidth);
+            PrimarnaCetka = new SolidBrush(Settings.TetrisBackground);
+            N = Settings.Rows;
+            M = Settings.Columns;
+            Matrix = new Square[N, M];
+
+            for (int i = 0; i < N; i++)
+            {
+                for (int j = 0; j < M; j++)
+                {
+                    Matrix[i, j] = new Square(new Point(j * _size.Height, i * _size.Width), _size, PrimarnaCetka);
+                }
+            }
+        }
+
         public void dodajFiguru(Shape obj)
         {
             //funkcija koja dodaje novu figuru i dodaje boju gde treba u matrici boja
@@ -158,9 +136,6 @@ namespace Tetris_Novi.Klase
                 {
                     if(obj.Matrica[i][j])
                     {
-                        MatricaProvera[i + icordinata][j + jcordinata] = true;
-                        MatricaBoja[i + icordinata][j + jcordinata] = new SolidBrush(obj.Boja);
-
                         Matrix[i + icordinata,j + jcordinata].Filled = true;
                         Matrix[i + icordinata,j + jcordinata].Brush = new SolidBrush(obj.Boja);
                     }
@@ -178,9 +153,6 @@ namespace Tetris_Novi.Klase
                 {
                     if(obj.Matrica[i][j])
                     {
-                        MatricaProvera[i + icoordinata][j + jcoordinata] = false;
-                        MatricaBoja[i + icoordinata][j + jcoordinata] = PrimarnaCetka;
-
                         Matrix[i + icoordinata, j + jcoordinata].Filled = false;
                         Matrix[i + icoordinata, j + jcoordinata].Brush = PrimarnaCetka;
                     }

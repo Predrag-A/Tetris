@@ -11,7 +11,7 @@ using Tetris_Novi.Klase;
 
 namespace Tetris_Novi.Classes
 {
-    internal class Settings:ICloneable
+    public class Settings:ICloneable
     {
 
         #region Attributes        
@@ -41,7 +41,7 @@ namespace Tetris_Novi.Classes
 
         #region Constructor
 
-        private Settings()
+        public Settings()
         {
             Default();
         }
@@ -110,7 +110,7 @@ namespace Tetris_Novi.Classes
         #region Colors Properties
 
         [Category("Figure Colors")]
-        [Description("Small square figure back color")]
+        [Description("The Small square figure back color")]
         public Color SmallSquareColor
         {
             get
@@ -124,7 +124,7 @@ namespace Tetris_Novi.Classes
         }
 
         [Category("Figure Colors")]
-        [Description("Cross figure back color")]
+        [Description("The Cross figure back color")]
         public Color CrossColor
         {
             get
@@ -138,7 +138,7 @@ namespace Tetris_Novi.Classes
         }
 
         [Category("Figure Colors")]
-        [Description("The Square figure back color")]
+        [Description("The Big Square figure back color")]
         public Color BigSquareColor
         {
             get
@@ -348,7 +348,7 @@ namespace Tetris_Novi.Classes
         }
 
         [Category("Dimensions")]
-        [Description("The number of rows in the tetris grid. Varies from 20 to 30")]
+        [Description("The number of rows in the tetris grid. Varies from 10 to 30")]
         [DefaultValue(20)]
         public int Rows
         {
@@ -358,7 +358,7 @@ namespace Tetris_Novi.Classes
             }
             set
             {
-                if (value > 30 || value < 20)
+                if (value > 30 || value < 10)
                     return;
                 if (rows == value)
                     return;
@@ -390,22 +390,6 @@ namespace Tetris_Novi.Classes
         }
 
         #endregion
-
-        #endregion
-
-        #region Singleton
-
-        private static Settings _instance;
-
-        public static Settings Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new Settings();
-                return _instance;
-            }
-        }
 
         #endregion
 

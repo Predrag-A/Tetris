@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris_Novi.Classes;
+using Tetris_Novi.Forms;
 using Tetris_Novi.Klase;
 using Tetris_Novi.User_control;
 
@@ -15,23 +16,23 @@ namespace Tetris_Novi
 {
     public partial class MainForm : Form
     {
-        private Shape _trenutnaFigura;
-        private Shape _sledecaFigura;
-        private int _brojPoena;
-        private int _velicinaKockice;
-        private int _kolikoSmallSquareSuFigure;
-        private int _vrm;
-        private int _nivo = 1;
-        private bool _pause = false;
+        Shape _trenutnaFigura;
+        Shape _sledecaFigura;
+        int _brojPoena;
+        int _velicinaKockice;
+        int _kolikoSmallSquareSuFigure;
+        int _vrm;
+        int _nivo = 1;
+        bool _pause = false;
 
         public MainForm()
-        {
+        { 
             InitializeComponent();
             postaviVrednosti();
             ListaFigura.Instance.dodajOblike(_kolikoSmallSquareSuFigure);
             postavi();
         }
-
+        
         public void postaviVrednosti()
         {
             _velicinaKockice = 31;
@@ -367,7 +368,11 @@ namespace Tetris_Novi
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
+            if (TC.ShowOptions() == DialogResult.OK)
+            {
+                Grid.ObjekatKlaseGrid.Resize();
+                TC.Refresh();
+            }
         }
     }
 }
