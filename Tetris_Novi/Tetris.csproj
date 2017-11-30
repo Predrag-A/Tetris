@@ -47,7 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Classes\ListaFigura.cs" />
+    <Compile Include="Classes\ShapeList.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\PlayerList.cs" />
     <Compile Include="Classes\Settings.cs" />

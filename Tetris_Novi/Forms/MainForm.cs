@@ -38,7 +38,7 @@ namespace Tetris_Novi
         public MainForm()
         {
             InitializeComponent();
-            ListaFigura.Instance.dodajOblike(3);
+            ShapeList.Instance.AddAllShapes(3);
             postavi();
             lblPause.Visible = false;
             _list = new PlayerList();
@@ -60,8 +60,8 @@ namespace Tetris_Novi
         public void randomSledeca()
         {
             Random k = new Random();
-            int r = k.Next(0, ListaFigura.Instance.vratiBrojFiguraUlisti());
-            _sledecaFigura = new Shape(ListaFigura.Instance.vratiFiguru(r));
+            int r = k.Next(0, ShapeList.Instance.GetCount());
+            _sledecaFigura = new Shape(ShapeList.Instance.GetShape(r));
         }
 
         public void staviSledecuFiguru()
@@ -138,8 +138,8 @@ namespace Tetris_Novi
         {
             Grid.Instance.DeleteShape(_trenutnaFigura);
             Random k = new Random();
-            int r = (int)(k.NextDouble() * ListaFigura.Instance.vratiBrojFiguraUlisti());
-            _trenutnaFigura = new Shape(ListaFigura.Instance.vratiFiguru(r));
+            int r = (int)(k.NextDouble() * ShapeList.Instance.GetCount());
+            _trenutnaFigura = new Shape(ShapeList.Instance.GetShape(r));
             Grid.Instance.AddShape(_trenutnaFigura);
         }
 
@@ -417,7 +417,7 @@ namespace Tetris_Novi
             {
                 Grid.Instance.Initialize();
                 TC.Refresh();
-                ListaFigura.Instance.dodajOblike(3);
+                ShapeList.Instance.AddAllShapes(3);
                 lblScore.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblTime.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblLevel.ForeColor = Grid.Instance.Settings.TetrisBorder;

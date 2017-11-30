@@ -8,41 +8,46 @@ using Tetris_Novi.Classes;
 
 namespace Tetris_Novi.Klase
 {
-    public class ListaFigura
+    public class ShapeList
     {
-        private static ListaFigura _instance = null;
-        private List<Shape> _listaF;
-        
 
-        public ListaFigura()
+        #region Attributes
+
+        List<Shape> _list;
+
+        #endregion
+
+
+        #region Constructors
+
+        private ShapeList()
         {
-            _listaF = new List<Shape>();
-        }
-        public static ListaFigura Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new ListaFigura();
-                return _instance;
-            }
+            _list = new List<Shape>();
         }
 
-        public Shape vratiFiguru(int i)
-        {
-            if (i < 0 || i >= _listaF.Count)
-                return _listaF[0];
-            return _listaF[i];
+        #endregion
+
+        #region Methods
+
+        //Returns a shape with the index i from the list
+        public Shape GetShape(int i)
+        {            
+            if (i < 0 || i >= _list.Count)
+                return _list[0];
+            return _list[i];
         }
 
+        //Adds a shape to the list
         public void AddShape(Shape obj)
         {
             if (obj != null)
-                _listaF.Add(obj);
+                _list.Add(obj);
         }
-        public void dodajOblike(int n1)
+
+        //Wipes the list and adds all existing shapes to the list
+        public void AddAllShapes(int n1)
         {
-            _listaF.Clear();
+            _list.Clear();
             
             //Linemo i dodajemo u listu plavi pravugaonik
             Shape line = new Shape(n1, Grid.Instance.Settings.LineColor);
@@ -84,18 +89,36 @@ namespace Tetris_Novi.Klase
             }
 
             //dodajemo u listu figura
-            _listaF.Add(line);
-            _listaF.Add(bigSquare);
-            _listaF.Add(smallSquare);
-            _listaF.Add(cross);
-            _listaF.Add(triangle);
+            _list.Add(line);
+            _list.Add(bigSquare);
+            _list.Add(smallSquare);
+            _list.Add(cross);
+            _list.Add(triangle);
         }
 
-        public int vratiBrojFiguraUlisti()
+        //Returns the number of shapes in the list
+        public int GetCount()
         {
-            return _listaF.Count;
+            return _list.Count;
         }
-        
+
+        #endregion
+
+        #region Singleton
+
+        static ShapeList _instance;
+
+        public static ShapeList Instance
+        {
+            get
+            {
+                if (_instance == null)
+                    _instance = new ShapeList();
+                return _instance;
+            }
+        }
+
+        #endregion
 
     }
 }

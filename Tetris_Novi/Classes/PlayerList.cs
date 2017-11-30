@@ -35,16 +35,19 @@ namespace Tetris_Novi.Classes
 
         #region Methods
 
+        //Adds a player to the list
         public void Add(Player p)
         {
             List.Add(p);
         }
 
+        //Used for XML serialization
         public void Serialize(string fileName)
         {
             XMLSerialization.Serialization.Serialize(this, fileName);
         }
 
+        //Used for XML deserialization
         public void Deserialize(string fileName)
         {
             XMLSerialization.Serialization.DeSerialize(this, fileName);

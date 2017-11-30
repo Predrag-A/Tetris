@@ -51,6 +51,7 @@ namespace Tetris_Novi.Classes
 
         #region Methods       
 
+        //Sets the default settings
         public void Default()
         {
             crossColor = Color.Purple;

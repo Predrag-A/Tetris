@@ -84,8 +84,7 @@ namespace Tetris_Novi.Classes
             return -1;
         }
 
-        #endregion
-        
+        #endregion        
 
     }
 }

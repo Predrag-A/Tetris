@@ -85,6 +85,7 @@ namespace Tetris_Novi.Klase
             }
         }
 
+        //Checks if the location of the shape is already taken
         public bool IsTaken(Shape obj)
         {
             int icoordinata = obj.GlavnaKoordinata.X;
@@ -156,20 +157,22 @@ namespace Tetris_Novi.Klase
             return false;
         }
 
+        //If any rows are filled, delete them and return the number of deleted rows
         public int DeleteRows()
         {
-            //funkcija koja trazi sve redove i brise ih 
-            int red = 0;
+            int count = 0;
             for(int i=Settings.Rows-1;i>=0;i--)
-            {
-                bool brisati = true;
+            {                
+                bool deleted = true;
+                //Checks if the row is filled, if it's not deleted=false
                 for (int j = Settings.Columns - 1; j >= 0; j--)
                     if (Matrix[i,j].Filled == false)
-                        brisati = false;
-                if(brisati)
+                        deleted = false;
+                if(deleted)
                 {
-                    red++;
-                    for(int k=i;k>0;k--)//pomera sve odozgo na dole
+                    //If the entire row is filled, move all the rows above the deleted row lower and increase the counter
+                    count++;
+                    for(int k=i;k>0;k--)
                     {
                         for(int l=Settings.Columns-1;l>=0;l--)
                         {
@@ -177,6 +180,7 @@ namespace Tetris_Novi.Klase
                             Matrix[k,l].Brush = Matrix[k - 1,l].Brush;
                         }
                     }
+                    //Because all rows have been shifted, fill in the first row as if it were empty
                     for(int k=Settings.Columns-1;k>=0;k--)
                     {
                         Matrix[0,k].Filled = false;
@@ -185,7 +189,7 @@ namespace Tetris_Novi.Klase
                     i++;
                 }
             }
-            return red;
+            return count;
         }
 
         #endregion
