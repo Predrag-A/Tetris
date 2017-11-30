@@ -5,165 +5,124 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     public class Shape
     {
-        private bool[][] _matrica;
-        private int _n;
-        private Color _boja;
-        private Point _glavnaKoordinata;
 
-        public bool[][] Matrica
+        #region Attributes
+
+        bool[,] _matrix;
+        int _dim;
+        Color _color;
+        Point _mainPoint;
+
+        #endregion
+
+        #region Properties
+
+        public bool[,] Matrix { get { return _matrix; } set { _matrix = value; } }
+        public int Dim { get { return _dim; } set { _dim = value; } }
+        public Color Color { get { return _color; } set { _color = value; } }
+        public Point MainPoint { get { return _mainPoint; } set { _mainPoint = value; } }
+        
+        #endregion
+
+        #region Constructors
+
+        public Shape(int n,Color c)
         {
-            get
-            {
-                return _matrica;
-            }
+            Color = c;
+            Dim = n;
 
-            set
+            Matrix = new bool[Dim, Dim];
+            for(int i=0;i<Dim;i++)
             {
-                _matrica = value;
-            }
-        }
-
-        public int N
-        {
-            get
-            {
-                return _n;
-            }
-
-            set
-            {
-                _n = value;
-            }
-        }
-
-        public Color Boja
-        {
-            get
-            {
-                return _boja;
-            }
-
-            set
-            {
-                _boja = value;
-            }
-        }
-
-        public Point GlavnaKoordinata
-        {
-            get
-            {
-                return _glavnaKoordinata;
-            }
-
-            set
-            {
-                _glavnaKoordinata = value;
-            }
-        }
-
-        public int GlavnaKordinataInt
-        {
-            get { return N / 2; }
-        }
-
-        public Shape(int n,Color boja)
-        {
-            Boja = boja;
-            N = n;
-            Matrica = new bool[n][];
-            for(int i=0;i<N;i++)
-            {
-                Matrica[i] = new bool[N];
-            }
-            for(int i=0;i<N;i++)
-            {
-                for(int j=0;j<N;j++)
+                for(int j=0;j<Dim;j++)
                 {
-                    Matrica[i][j] = false;
+                    Matrix[i,j] = false;
                 }
             }
-            GlavnaKoordinata = new Point();
+            MainPoint = new Point();
         }
 
         public Shape(Shape obj)
         {
-            Boja = obj.Boja;
-            N = obj.N;
-            Matrica = new bool[N][];
-            for(int i=0;i<N;i++)
+            Color = obj.Color;
+            Dim = obj.Dim;
+            Matrix = new bool[Dim,Dim];
+            for(int i=0;i<Dim;i++)
             {
-                Matrica[i] = new bool[N];
-            }
-            for(int i=0;i<N;i++)
-            {
-                for(int j=0;j<N;j++)
+                for(int j=0;j<Dim;j++)
                 {
-                    Matrica[i][j] = obj.Matrica[i][j];
+                    Matrix[i,j] = obj.Matrix[i,j];
                 }
             }
-            GlavnaKoordinata = new Point();
+            MainPoint = new Point();
         }
 
-        //rotacija matrice u levo
-        public void RotacijaLevo()
+        #endregion
+
+        #region Methods
+
+        /*
+         * Rotation:
+         * When rotating right, for a N=3 matrix the indexes are transferred as such:
+         *      i=0:         i=1:        i=2:               010     010
+         * j=0  0,0->0,2     1,0->0,1    0,2->2,2           111  => 011
+         * j=1  0,1->1,2     1,1->1,1    1,2->2,1           000     010
+         * j=2  0,2->2,2     1,2->2,1    2,2->2,0
+         * As such we can conclude that the relation is i,j->j,N-1-i. When rotating left it's the opposite.
+        */
+
+        public void RotateR()
+        {            
+            bool[,] pom = new bool[Dim,Dim];
+
+            for(int i=0;i<Dim;i++)
+            {
+                for(int j=0;j<Dim;j++)
+                {
+                    pom[j,Dim - 1 - i] = Matrix[i,j];
+                }
+            }
+
+            for(int i=0;i<Dim;i++)
+            {
+                for(int j=0;j<Dim;j++)
+                {
+                    Matrix[i,j] = pom[i,j];
+                }
+            }
+        }
+
+        public void RotateL()
         {
-            //pravimo pomocnu matricu 
-            bool[][] pom = new bool[N][];
-            for(int i=0;i<N;i++)
+            bool[,] pom = new bool[Dim, Dim];
+
+            for (int i = 0; i < Dim; i++)
             {
-                pom[i] = new bool[N];
-            }
-            for(int i=0;i<N;i++)
-            {
-                for(int j=0;j<N;j++)
+                for (int j = 0; j < Dim; j++)
                 {
-                    pom[i][j] = Matrica[j][N - i - 1];
+                    pom[i, j] = Matrix[j, Dim - i - 1];
                 }
             }
 
-            //vracamo elemente u glavnu matricu 
-            for(int i=0;i<N;i++)
+            for (int i = 0; i < Dim; i++)
             {
-                for(int j=0;j<N;j++)
+                for (int j = 0; j < Dim; j++)
                 {
-                    Matrica[i][j] = pom[i][j];
+                    Matrix[i, j] = pom[i, j];
                 }
             }
         }
 
-        //rotacija matrice u desno
-        public void RotacijaDesno()
+        public void SetLocation(Point loc)
         {
-            bool[][] pom = new bool[N][];
-            for (int i = 0; i < N; i++)
-                pom[i] = new bool[N];
-            for(int i=0;i<N;i++)
-            {
-                for(int j=0;j<N;j++)
-                {
-                    pom[j][N - 1 - i] = Matrica[i][j];
-                }
-            }
-
-            for(int i=0;i<N;i++)
-            {
-                for(int j=0;j<N;j++)
-                {
-                    Matrica[i][j] = pom[i][j];
-                }
-            }
+            _mainPoint = loc;
         }
 
-        public void PodesiLokaciju(Point lokacija)
-        {
-            _glavnaKoordinata = lokacija;
-        }
+        #endregion
 
-        
     }
 }

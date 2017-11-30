@@ -4,20 +4,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     class Triangle:Shape
     {
-        public Triangle(int n):base(n,System.Drawing.Color.Red)
+
+        #region Constructors
+
+        public Triangle(int n):base(n,Grid.Instance.Settings.TriangleColor)
         {
             for(int i=0;i<n;i++)
             {
-                Matrica[n / 2][i] = true;
+                Matrix[n / 2,i] = true;
             }
             for(int i=0;i<n/2;i++)
             {
-                Matrica[i][n / 2] = true;
+                Matrix[i,n / 2] = true;
             }
         }
+
+        #endregion
+
     }
 }

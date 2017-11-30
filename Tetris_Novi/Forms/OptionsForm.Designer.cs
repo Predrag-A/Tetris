@@ -1,4 +1,4 @@
-﻿namespace Tetris_Novi.Forms
+﻿namespace Tetris.Forms
 {
     partial class OptionsForm
     {

@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetris_Novi.Classes
+namespace Tetris.Classes
 {
     public class Square
     {

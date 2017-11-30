@@ -4,14 +4,18 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     public class SmallSquare:Shape
     {
-        public SmallSquare(int n):base(n,System.Drawing.Color.Yellow)
+        #region Constructors
+
+        public SmallSquare(int n):base(n,Grid.Instance.Settings.SmallSquareColor)
         {
-            Matrica[N / 2][N / 2] = true;
+            Matrix[Dim / 2,Dim / 2] = true;
         }
+
+        #endregion
 
     }
 }

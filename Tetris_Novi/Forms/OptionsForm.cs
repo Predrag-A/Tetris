@@ -7,9 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Tetris_Novi.Classes;
+using Tetris.Classes;
 
-namespace Tetris_Novi.Forms
+namespace Tetris.Forms
 {
     public partial class OptionsForm : Form
     {

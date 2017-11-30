@@ -4,14 +4,20 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     public class Line:Shape
     {
-        public Line(int n):base(n,System.Drawing.Color.RoyalBlue)
+
+        #region Constructors
+
+        public Line(int n):base(n,Grid.Instance.Settings.LineColor)
         {
             for (int i = 0; i < n; i++)
-                Matrica[i][n / 2] = true;
+                Matrix[i,n / 2] = true;
         }
+
+        #endregion
+
     }
 }

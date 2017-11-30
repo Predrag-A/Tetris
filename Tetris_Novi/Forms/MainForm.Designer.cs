@@ -1,4 +1,4 @@
-﻿namespace Tetris_Novi
+﻿namespace Tetris
 {
     partial class MainForm
     {
@@ -41,7 +41,7 @@
             this.leaderboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerDrop = new System.Windows.Forms.Timer(this.components);
-            this.TC = new Tetris_Novi.User_control.TetrisControl();
+            this.TC = new Tetris.User_control.TetrisControl();
             this.panel = new System.Windows.Forms.Panel();
             this.lblPause = new System.Windows.Forms.Label();
             this.lblNext = new System.Windows.Forms.Label();
@@ -94,7 +94,7 @@
             // 
             this.novaIgraToolStripMenuItem.Name = "novaIgraToolStripMenuItem";
             this.novaIgraToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.novaIgraToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.novaIgraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.novaIgraToolStripMenuItem.Text = "New Game";
             this.novaIgraToolStripMenuItem.Click += new System.EventHandler(this.novaIgraToolStripMenuItem_Click);
             // 
@@ -102,7 +102,7 @@
             // 
             this.pauzaToolStripMenuItem.Name = "pauzaToolStripMenuItem";
             this.pauzaToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.pauzaToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.pauzaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.pauzaToolStripMenuItem.Text = "Pause";
             this.pauzaToolStripMenuItem.Click += new System.EventHandler(this.pauzaToolStripMenuItem_Click);
             // 
@@ -110,19 +110,20 @@
             // 
             this.endGameToolStripMenuItem.Name = "endGameToolStripMenuItem";
             this.endGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
-            this.endGameToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.endGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.endGameToolStripMenuItem.Text = "End Game";
+            this.endGameToolStripMenuItem.Click += new System.EventHandler(this.endGameToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
-            this.toolStripSeparator1.Size = new System.Drawing.Size(148, 6);
+            this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
             // izlazToolStripMenuItem
             // 
             this.izlazToolStripMenuItem.Name = "izlazToolStripMenuItem";
             this.izlazToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.izlazToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.izlazToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
             this.izlazToolStripMenuItem.Text = "Exit";
             this.izlazToolStripMenuItem.Click += new System.EventHandler(this.izlazToolStripMenuItem_Click);
             // 
@@ -171,7 +172,7 @@
             // 
             this.lblPause.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblPause.ForeColor = System.Drawing.Color.Crimson;
+            this.lblPause.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lblPause.Location = new System.Drawing.Point(0, 548);
             this.lblPause.Name = "lblPause";
             this.lblPause.Size = new System.Drawing.Size(200, 23);
@@ -183,7 +184,7 @@
             // 
             this.lblNext.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblNext.ForeColor = System.Drawing.Color.Crimson;
+            this.lblNext.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lblNext.Location = new System.Drawing.Point(0, 23);
             this.lblNext.Name = "lblNext";
             this.lblNext.Size = new System.Drawing.Size(200, 23);
@@ -195,7 +196,7 @@
             // 
             this.lblScore.Dock = System.Windows.Forms.DockStyle.Top;
             this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblScore.ForeColor = System.Drawing.Color.Crimson;
+            this.lblScore.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lblScore.Location = new System.Drawing.Point(0, 0);
             this.lblScore.Name = "lblScore";
             this.lblScore.Size = new System.Drawing.Size(200, 23);
@@ -207,7 +208,7 @@
             // 
             this.lblTime.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblTime.ForeColor = System.Drawing.Color.Crimson;
+            this.lblTime.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lblTime.Location = new System.Drawing.Point(0, 571);
             this.lblTime.Name = "lblTime";
             this.lblTime.Size = new System.Drawing.Size(200, 23);
@@ -219,7 +220,7 @@
             // 
             this.lblLevel.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.lblLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
-            this.lblLevel.ForeColor = System.Drawing.Color.Crimson;
+            this.lblLevel.ForeColor = System.Drawing.Color.DarkMagenta;
             this.lblLevel.Location = new System.Drawing.Point(0, 594);
             this.lblLevel.Name = "lblLevel";
             this.lblLevel.Size = new System.Drawing.Size(200, 23);

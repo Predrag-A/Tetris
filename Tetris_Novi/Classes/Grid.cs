@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
-using Tetris_Novi.Classes;
+using Tetris.Classes;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     public class Grid
     {
@@ -51,17 +51,17 @@ namespace Tetris_Novi.Klase
         //Adds a new shape and colors in the corresponding squares in the grid
         public void AddShape(Shape obj)
         {
-            int icordinata = obj.GlavnaKoordinata.X;
-            int jcordinata = obj.GlavnaKoordinata.Y;
+            int icordinata = obj.MainPoint.X;
+            int jcordinata = obj.MainPoint.Y;
 
-            for(int i=0;i<obj.N;i++)
+            for(int i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.N;j++)
+                for(int j=0;j<obj.Dim;j++)
                 {
-                    if(obj.Matrica[i][j])
+                    if(obj.Matrix[i,j])
                     {
                         Matrix[i + icordinata,j + jcordinata].Filled = true;
-                        Matrix[i + icordinata,j + jcordinata].Brush = new SolidBrush(obj.Boja);
+                        Matrix[i + icordinata,j + jcordinata].Brush = new SolidBrush(obj.Color);
                     }
                 }
             }
@@ -70,13 +70,13 @@ namespace Tetris_Novi.Klase
         //Removes the shape from the grid
         public void DeleteShape(Shape obj)
         {
-            int icoordinata = obj.GlavnaKoordinata.X;
-            int jcoordinata = obj.GlavnaKoordinata.Y;
-            for(int i=0;i<obj.N;i++)
+            int icoordinata = obj.MainPoint.X;
+            int jcoordinata = obj.MainPoint.Y;
+            for(int i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.N;j++)
+                for(int j=0;j<obj.Dim;j++)
                 {
-                    if(obj.Matrica[i][j])
+                    if(obj.Matrix[i,j])
                     {
                         Matrix[i + icoordinata, j + jcoordinata].Filled = false;
                         Matrix[i + icoordinata, j + jcoordinata].Brush = new SolidBrush(Settings.TetrisBackground);
@@ -88,18 +88,18 @@ namespace Tetris_Novi.Klase
         //Checks if the location of the shape is already taken
         public bool IsTaken(Shape obj)
         {
-            int icoordinata = obj.GlavnaKoordinata.X;
-            int jcoordinata = obj.GlavnaKoordinata.Y;
-            int proveri1 = obj.N - 1 + icoordinata;
-            int proveri2 = obj.N - 1 + jcoordinata;
+            int icoordinata = obj.MainPoint.X;
+            int jcoordinata = obj.MainPoint.Y;
+            int proveri1 = obj.Dim - 1 + icoordinata;
+            int proveri2 = obj.Dim - 1 + jcoordinata;
             int provera3 = jcoordinata;
             bool provera = false;
 
-            for(int j=obj.N-1;j>=0;j--)
+            for(int j=obj.Dim-1;j>=0;j--)
             {
-                for(int i=0;i<obj.N;i++)
+                for(int i=0;i<obj.Dim;i++)
                 {
-                    if (obj.Matrica[i][j])
+                    if (obj.Matrix[i,j])
                     {
                         provera = true;
                     }
@@ -110,11 +110,11 @@ namespace Tetris_Novi.Klase
             }
 
             provera = false;
-            for(int j=obj.N-1;j>=0;j--)
+            for(int j=obj.Dim-1;j>=0;j--)
             {
-                for(int i=0;i<obj.N;i++)
+                for(int i=0;i<obj.Dim;i++)
                 {
-                    if(obj.Matrica[j][i])
+                    if(obj.Matrix[j,i])
                     {
                         provera = true;
                     }
@@ -126,11 +126,11 @@ namespace Tetris_Novi.Klase
 
 
             provera = false;
-            for(int j=0;j<obj.N;j++)
+            for(int j=0;j<obj.Dim;j++)
             {
-                for(int i=0;i<obj.N;i++)
+                for(int i=0;i<obj.Dim;i++)
                 {
-                    if(obj.Matrica[i][j])
+                    if(obj.Matrix[i,j])
                     {
                         provera = true;
                     }
@@ -142,11 +142,11 @@ namespace Tetris_Novi.Klase
 
             if (proveri1 >= Settings.Rows || proveri2 >= Settings.Columns || provera3 < 0)
                 return true;
-            for(int i=0;i<obj.N;i++)
+            for(int i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.N;j++)
+                for(int j=0;j<obj.Dim;j++)
                 {
-                    if(obj.Matrica[i][j])
+                    if(obj.Matrix[i,j])
                     {
                         if (Matrix[i+icoordinata,j+jcoordinata].Filled)
                             return true;

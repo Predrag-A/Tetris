@@ -7,9 +7,9 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Tetris_Novi.Klase;
+using Tetris.Klase;
 
-namespace Tetris_Novi.Classes
+namespace Tetris.Classes
 {
     public class Settings
     {
@@ -60,7 +60,7 @@ namespace Tetris_Novi.Classes
             triangleColor = Color.Red;
             smallSquareColor = Color.Orange;
 
-            tetrisBorder = Color.Crimson;
+            tetrisBorder = Color.DarkMagenta;
             tetrisBackground = Color.Black;
 
             leftKey = Keys.Left;

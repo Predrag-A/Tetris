@@ -4,19 +4,25 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Tetris_Novi.Klase
+namespace Tetris.Klase
 {
     public class BigSquare:Shape
     {
-        public BigSquare(int n):base(n,System.Drawing.Color.DarkGreen)
+
+        #region Constructors
+
+        public BigSquare(int n):base(n,Grid.Instance.Settings.BigSquareColor)
         {
-            for(int i=0;i<N;i++)
+            for(int i=0;i<Dim;i++)
             {
-                for(int j=0;j<N;j++)
+                for(int j=0;j<Dim;j++)
                 {
-                    Matrica[i][j] = true;
+                    Matrix[i,j] = true;
                 }
             }
         }
+
+        #endregion
+
     }
 }

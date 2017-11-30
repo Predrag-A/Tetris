@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Xml.Serialization;
 
-namespace Tetris_Novi.Classes
+namespace Tetris.Classes
 {
     [Serializable]
     public class PlayerList
@@ -19,7 +19,7 @@ namespace Tetris_Novi.Classes
 
         #region Properties
 
-        [XmlArrayItem("List",typeof(Player))]
+        [XmlArrayItem("PlayerList",typeof(Player))]
         public List<Player> List { get { return list; } set { list = value; } }
 
         #endregion

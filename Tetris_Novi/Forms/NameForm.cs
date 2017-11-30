@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Tetris_Novi.Forms
+namespace Tetris.Forms
 {
     public partial class NameForm : Form
     {

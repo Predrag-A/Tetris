@@ -1,4 +1,4 @@
-﻿namespace Tetris_Novi.User_control
+﻿namespace Tetris.User_control
 {
     partial class TetrisControl
     {

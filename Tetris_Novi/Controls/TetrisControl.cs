@@ -7,11 +7,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using Tetris_Novi.Klase;
-using Tetris_Novi.Classes;
-using Tetris_Novi.Forms;
+using Tetris.Klase;
+using Tetris.Classes;
+using Tetris.Forms;
 
-namespace Tetris_Novi.User_control
+namespace Tetris.User_control
 {
     public partial class TetrisControl : UserControl
     {

@@ -3,8 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
-namespace Tetris_Novi.Classes
+namespace Tetris.Classes
 {
 
     [Serializable]
@@ -20,8 +21,11 @@ namespace Tetris_Novi.Classes
 
         #region Properties
 
+        [XmlElementAttribute("PlayerName")]
         public string Name { get { return name; } set { name = value; } }
+        [XmlElementAttribute("Score")]
         public int Score { get { return score; } set { score = value; } }
+        [XmlElementAttribute("Date")]
         public DateTime Time { get { return time; } set { time = value; } }
 
         #endregion
