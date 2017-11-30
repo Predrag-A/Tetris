@@ -14,44 +14,39 @@ using Tetris_Novi.User_control;
 
 namespace Tetris_Novi
 {
+
+    //TODO Initialize problem
+
     public partial class MainForm : Form
     {
         Shape _trenutnaFigura;
         Shape _sledecaFigura;
-        int _brojPoena;
-        int _velicinaKockice;
-        int _kolikoSmallSquareSuFigure;
+        int _score;
         int _vrm;
-        int _nivo = 1;
+        int _level;
         bool _pause = false;
 
         public MainForm()
-        { 
-            InitializeComponent();
-            this.Width = (int)(TC.Width * 1.1);
-            this.Height = (int)(TC.Height * 1.1);
-            postaviVrednosti();
-            ListaFigura.Instance.dodajOblike(_kolikoSmallSquareSuFigure);
-            postavi();
-        }
-        
-        public void postaviVrednosti()
         {
-            _velicinaKockice = 31;
-            _kolikoSmallSquareSuFigure = 3;
-        }
+            InitializeComponent();
+            ListaFigura.Instance.dodajOblike(3);
+            postavi();
+            lblPause.Visible = false;
+            PlayerList.Instance.Deserialize("Leaderboard.xml");
+        }        
 
         public void postavi()
         {
             randomSledeca();
-            _brojPoena = 0;
-            lblTrenutniRezultat.Text = _brojPoena.ToString();
+            _score = 0;
+            _level = Grid.Instance.Settings.StartLevel;
+            lblScore.Text = "Score:" + _score.ToString();
         }
 
         public void randomSledeca()
         {
             Random k = new Random();
-            int r = (int)(k.NextDouble() * ListaFigura.Instance.vratiBrojFiguraUlisti());
+            int r = k.Next(0, ListaFigura.Instance.vratiBrojFiguraUlisti());
             _sledecaFigura = new Shape(ListaFigura.Instance.vratiFiguru(r));
         }
 
@@ -64,40 +59,41 @@ namespace Tetris_Novi
         private void moveDown()
         {
             //obrisemo je sa tebele
-            Grid.ObjekatKlaseGrid.obrisiFiguru(_trenutnaFigura);
+            Grid.Instance.DeleteShape(_trenutnaFigura);
             //pomerimo
             _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X + 1, _trenutnaFigura.GlavnaKoordinata.Y));
             //pitamo da li ima mesta za nju gde sam je pomerio
-            if(Grid.ObjekatKlaseGrid.ZauzetoJe(_trenutnaFigura))
+            if (Grid.Instance.IsTaken(_trenutnaFigura))
             {
                 //ako nema vratim joj trenutnu poziciju
-                _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X - 1, _trenutnaFigura.GlavnaKoordinata.Y ));
+                _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X - 1, _trenutnaFigura.GlavnaKoordinata.Y));
                 //dodamo je na staru poziciju I proveravamo redove da se nije spojio ceo
-                Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
-                _brojPoena += ((int)Math.Pow(Grid.ObjekatKlaseGrid.obrisiRedove(), 2) * 100);
-                lblTrenutniRezultat.Text = _brojPoena.ToString();
+                Grid.Instance.AddShape(_trenutnaFigura);
+                _score += ((int)Math.Pow(Grid.Instance.DeleteRows(), 2) * 100);
+                lblScore.Text = "Score: " + _score.ToString();
                 staviSledecuFiguru();
-                if(Grid.ObjekatKlaseGrid.ZauzetoJe(_trenutnaFigura))
+                if (Grid.Instance.IsTaken(_trenutnaFigura))
                 {
                     //izgubljena igra 
-                    IzgubljenaIgra();
+                    GameEnd();
                     return;
                 }
-                Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura); //ako ne dodajemo je u tablu
+                Grid.Instance.AddShape(_trenutnaFigura); //ako ne dodajemo je u tablu
 
             }
             else
             {
-                Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+                Grid.Instance.AddShape(_trenutnaFigura);
 
             }
             this.Refresh();
         }
 
-        public void IzgubljenaIgra()
+        public void GameEnd()
         {
-            timer1.Stop();
-            if(int.Parse(lblTrenutniRezultat.Text) == 0)
+            timerGame.Stop();
+            timerDrop.Stop();
+            if (_score == 0)
             {
                 DialogResult s = MessageBox.Show("Kraj igre. Da li zelite novu partiju?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (s == DialogResult.Yes)
@@ -105,155 +101,137 @@ namespace Tetris_Novi
                     novaIgraToolStripMenuItem.PerformClick();
                 }
                 else
-                    this.Close();
+                    Grid.Instance.Initialize();
             }
             else
             {
-                var frm = new FormIgrac(lblTrenutniRezultat.Text);
-                DialogResult x = frm.ShowDialog();
-                if (x == DialogResult.Yes)
-                {
-                    ListaIgraca l = new ListaIgraca();
-                    l = l.DeSerialize("Top10.xml");
-                    l.AddIgrac(frm.trenutniIgrac);
-                    l.Serialize("Top10.xml");
-                }
+                PlayerList.Instance.Add(new Player());
+                PlayerList.Instance.Serialize("Leaderboard.xml");
+                
                 DialogResult s = MessageBox.Show("Kraj igre. Da li zelite novu partiju?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (s == DialogResult.Yes)
                 {
                     novaIgraToolStripMenuItem.PerformClick();
                 }
                 else
-                    this.Close();
+                {
+                    Grid.Instance.Initialize();
+                }
             }
-        }
-
-        private void Form1_Load(object sender, EventArgs e)
-        {
-            //VIDETI KAKO DA UKOMBINUJEMO DA MU POSALJEMO OBJEKAT
-            //TetrisControl.OsvesiDelegat = new TetrisControl.OsvesiDelegat();
-        }
+        }       
 
         private void novaIgraToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            postavi();
-            _pause = false;
-            _vrm = 0;
-            staviSledecuFiguru();
-            timer1.Start();
-            Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
-            this.Refresh();
+            NameForm frm = new NameForm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                preview.Visible = true;
+                postavi();
+                _pause = false;
+                _vrm = 0;
+                staviSledecuFiguru();
+                timerGame.Start();
+                timerDrop.Start();
+                Grid.Instance.AddShape(_trenutnaFigura);
+                this.Refresh();
+            }
         }
 
         //funkcija koja nam dozvoljava da koristimo strelice nasao na steckoverflow
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //ako nije ukljucen tajmer to znaci da je igrica na puzi
-            if(timer1.Enabled)
+            if (timerDrop.Enabled)
             {
-                if(keyData==Keys.Left || keyData==Keys.Right)
+                if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
                 {
                     //ovo je slicno kao pomeranje na dole
                     int move;
-                    if (keyData == Keys.Left)
+                    if (keyData == Grid.Instance.Settings.LeftKey)
                     {
                         move = -1;
                     }
                     else
                         move = 1;
-                    Grid.ObjekatKlaseGrid.obrisiFiguru(_trenutnaFigura); //obrisemo ga
+                    Grid.Instance.DeleteShape(_trenutnaFigura); //obrisemo ga
                     _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y + move));
-                    if(Grid.ObjekatKlaseGrid.ZauzetoJe(_trenutnaFigura))
+                    if (Grid.Instance.IsTaken(_trenutnaFigura))
                     {
                         _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y - move));
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+                        Grid.Instance.AddShape(_trenutnaFigura);
                     }
                     else
                     {
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+                        Grid.Instance.AddShape(_trenutnaFigura);
                         this.Refresh();
                     }
                     return true;
                 }
-                if(keyData==Keys.Space)
+                if (keyData == Grid.Instance.Settings.RotateKey)
                 {
-                    Grid.ObjekatKlaseGrid.obrisiFiguru(_trenutnaFigura);
+                    Grid.Instance.DeleteShape(_trenutnaFigura);
                     _trenutnaFigura.RotacijaLevo();
-                    if(Grid.ObjekatKlaseGrid.ZauzetoJe(_trenutnaFigura))
+                    if (Grid.Instance.IsTaken(_trenutnaFigura))
                     {
                         _trenutnaFigura.RotacijaDesno();
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+                        Grid.Instance.AddShape(_trenutnaFigura);
                     }
                     else
                     {
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+                        Grid.Instance.AddShape(_trenutnaFigura);
                         this.Refresh();
                     }
                     return true;
                 }
-                if(keyData==Keys.S)
-                {
-                    Grid.ObjekatKlaseGrid.obrisiFiguru(_trenutnaFigura);
-                    _trenutnaFigura.RotacijaDesno();
-                    if(Grid.ObjekatKlaseGrid.ZauzetoJe(_trenutnaFigura))
-                    {
-                        _trenutnaFigura.RotacijaLevo();
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
-                    }
-                    else
-                    {
-                        Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
-                        this.Refresh();
-                    }
-                    return true;
-                }
-                if(keyData==Keys.Down)
+                if (keyData == Grid.Instance.Settings.DownKey)
                 {
                     moveDown();
                     return true;
                 }
-                if(keyData ==Keys.D)
+                if (keyData == Keys.D)
                 {
                     randomSledeca();
                     this.Refresh();
                     return true;
                 }
-                if(keyData == Keys.P)
+                if (keyData == Keys.P)
                 {
                     pauzaToolStripMenuItem.PerformClick();
                 }
-                if(keyData == Keys.N)
+                if (keyData == Keys.N)
                 {
                     promeniTrenutnu();
                 }
             }
-            return base.ProcessCmdKey(ref msg, keyData);            
+            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         public void promeniTrenutnu()
         {
-            Grid.ObjekatKlaseGrid.obrisiFiguru(_trenutnaFigura);
+            Grid.Instance.DeleteShape(_trenutnaFigura);
             Random k = new Random();
             int r = (int)(k.NextDouble() * ListaFigura.Instance.vratiBrojFiguraUlisti());
             _trenutnaFigura = new Shape(ListaFigura.Instance.vratiFiguru(r));
-            Grid.ObjekatKlaseGrid.dodajFiguru(_trenutnaFigura);
+            Grid.Instance.AddShape(_trenutnaFigura);
         }
 
         private void pauzaToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if(!_pause)
+            if (!_pause)
             {
-                timer1.Stop();
+                timerGame.Stop();
+                timerDrop.Stop();
                 _pause = true;
-                lblPauzirano.Visible = true;
+                lblPause.Visible = true;
                 pauzaToolStripMenuItem.Text = "Nastavi";
                 this.Refresh();
             }
             else
             {
-                timer1.Start();
+                timerGame.Start();
+                timerDrop.Start();
                 _pause = false;
-                lblPauzirano.Visible = false;
+                lblPause.Visible = false;
                 this.Refresh();
             }
         }
@@ -261,97 +239,135 @@ namespace Tetris_Novi
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
             Rectangle zaSledeca;
-            for(int i=0;i<_sledecaFigura.N;i++)
+            for (int i = 0; i < _sledecaFigura.N; i++)
             {
-                for(int j=0;j<_sledecaFigura.N;j++)
+                for (int j = 0; j < _sledecaFigura.N; j++)
                 {
                     Color chosen = Color.Transparent;
-                    if(_sledecaFigura.Matrica[i][j])
+                    if (_sledecaFigura.Matrica[i][j])
                     {
                         chosen = _sledecaFigura.Boja;
                     }
-                    zaSledeca = new Rectangle(new Point(30+j * _velicinaKockice, 30 + i * _velicinaKockice), new Size(_velicinaKockice, _velicinaKockice));
+                    zaSledeca = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
+                        new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
                     e.Graphics.FillRectangle(new SolidBrush(chosen), zaSledeca);
                 }
             }
         }
 
-        public void postaviNivo()
+        //The level is set depending on the score
+        public void SetLevel()
         {
-            lblNivo.Text = _nivo.ToString();
-            if(_brojPoena >= 0 && _brojPoena < 1000)
+            lblLevel.Text = "LEVEL: " + _level.ToString();
+
+            switch (_level)
             {
-                _nivo = 1;
-                lblNivo.Text = "1";
-                timer1.Interval = 1000;
+                case 1:
+                    if (_score >= 1000)
+                        _level++;
+                    break;
+                case 2:
+                    if (_score >= 2000)
+                        _level++;
+                    break;
+                case 3:
+                    if (_score >= 3000)
+                        _level++;
+                    break;
+                case 4:
+                    if (_score >= 4000)
+                        _level++;
+                    break;
+                case 5:
+                    if (_score >= 5000)
+                        _level++;
+                    break;
+                case 6:
+                    if (_score >= 6000)
+                        _level++;
+                    break;
+                case 7:
+                    if (_score >= 7000)
+                        _level++;
+                    break;
+                case 8:
+                    if (_score >= 8000)
+                        _level++;
+                    break;
+                case 9:
+                    if (_score >= 9000)
+                        _level++;
+                    break;
+                case 10:
+                    if (_score >= 10000)
+                        _level++;
+                    break;
+                case 11:
+                    if (_score >= 15000)
+                        _level++;
+                    break;
+                default:
+                    return;
             }
-            if(_brojPoena >= 1000 && _brojPoena < 2000)
-            {
-                _nivo = 2;
-                lblNivo.Text = "2";
-                timer1.Interval = 900;
-            }
-            if (_brojPoena >= 2000 && _brojPoena < 3000)
-            {
-                _nivo = 3;
-                lblNivo.Text = "3";
-                timer1.Interval = 800;
-            }
-            if (_brojPoena >= 3000 && _brojPoena < 4000)
-            {
-                _nivo = 4;
-                lblNivo.Text = "4";
-                timer1.Interval = 700;
-            }
-            if (_brojPoena >= 4000 && _brojPoena < 5000)
-            {
-                _nivo = 5;
-                lblNivo.Text = "5";
-                timer1.Interval = 600;
-            }
-            if (_brojPoena >= 5000 && _brojPoena < 6000)
-            {
-                _nivo = 6;
-                lblNivo.Text = "6";
-                timer1.Interval = 500;
-            }
-            if (_brojPoena >= 6000 && _brojPoena < 7000)
-            {
-                _nivo = 7;
-                lblNivo.Text = "7";
-                timer1.Interval = 400;
-            }
-            if (_brojPoena >= 7000 && _brojPoena < 8000)
-            {
-                _nivo = 8;
-                lblNivo.Text = "8";
-                timer1.Interval = 300;
-            }
-            if (_brojPoena >= 8000 && _brojPoena < 9000)
-            {
-                _nivo = 9;
-                lblNivo.Text = "9";
-                timer1.Interval = 200;
-            }
-            if (_brojPoena >= 9000)
-            {
-                _nivo = 10;
-                lblNivo.Text = "10";
-                timer1.Interval = 100;
-            }
+
+            UpdateInterval();
+
         }
 
+        //Updates timer to intervals depending on level
+        void UpdateInterval()
+        {
+            switch (_level)
+            {
+                case 1:
+                    timerDrop.Interval = 1000;
+                    break;
+                case 2:
+                    timerDrop.Interval = 900;
+                    break;
+                case 3:
+                    timerDrop.Interval = 800;
+                    break;
+                case 4:
+                    timerDrop.Interval = 700;
+                    break;
+                case 5:
+                    timerDrop.Interval = 600;
+                    break;
+                case 6:
+                    timerDrop.Interval = 500;
+                    break;
+                case 7:
+                    timerDrop.Interval = 400;
+                    break;
+                case 8:
+                    timerDrop.Interval = 300;
+                    break;
+                case 9:
+                    timerDrop.Interval = 200;
+                    break;
+                case 10:
+                    timerDrop.Interval = 100;
+                    break;
+                case 11:
+                    timerDrop.Interval = 80;
+                    break;
+                case 12:
+                    timerDrop.Interval = 60;
+                    break;
+            }
+        }
+    
         private void timer1_Tick(object sender, EventArgs e)
         {
-            postaviNivo();
-            _vrm++;
-            lblVreme.Text = _vrm.ToString();
+            SetLevel();
             moveDown();
         }
 
         private void izlazToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            timer1.Stop();
+            timerGame.Stop();
+            timerDrop.Stop();
             DialogResult dlg;
             dlg = MessageBox.Show("Da li ste sigurni da zelite da izadjete?", "Infromacija", MessageBoxButtons.YesNo, MessageBoxIcon.Information);
             if (dlg == DialogResult.Yes)
@@ -359,26 +375,38 @@ namespace Tetris_Novi
                 this.Close();
             }
             else
-                timer1.Start();
+            {
+                timerGame.Start();
+                timerDrop.Start();
+            }
         }
 
         private void najboljiRezultatiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frm = new Top10();
+            var frm = new Leaderboard();
             DialogResult x = frm.ShowDialog();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (timerDrop.Enabled || _pause)
+                return;
             if (TC.ShowOptions() == DialogResult.OK)
             {
-                Grid.ObjekatKlaseGrid.Resize();
+                Grid.Instance.Initialize();
                 TC.Refresh();
-                TC.Width = Grid.ObjekatKlaseGrid.N * Grid.ObjekatKlaseGrid.Settings.SingleSquareWidth;
-                TC.Height = Grid.ObjekatKlaseGrid.M * Grid.ObjekatKlaseGrid.Settings.SingleSquareWidth;
-                this.Width = (int)(TC.Width*1.1);
-                this.Height = (int)(TC.Height*1.1);
+                ListaFigura.Instance.dodajOblike(3);
+                lblScore.ForeColor = Grid.Instance.Settings.TetrisBorder;
+                lblTime.ForeColor = Grid.Instance.Settings.TetrisBorder;
+                lblLevel.ForeColor = Grid.Instance.Settings.TetrisBorder;
+                lblNext.ForeColor = Grid.Instance.Settings.TetrisBorder;
             }
+        }
+
+        private void timerGame_Tick(object sender, EventArgs e)
+        {
+            _vrm++;
+            lblTime.Text = "Time: " + _vrm.ToString();
         }
     }
 }

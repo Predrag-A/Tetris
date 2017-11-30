@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
-namespace Tetris_Novi.Klase
+namespace XMLSerialization
 {
-    public static class Extension
+    public static class Serialization
     {
         public static string Serialize<T>(this T value)
         {

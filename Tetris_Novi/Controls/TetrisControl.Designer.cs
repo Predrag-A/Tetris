@@ -37,7 +37,7 @@
             this.pbTetris.BackColor = System.Drawing.Color.Transparent;
             this.pbTetris.Location = new System.Drawing.Point(3, 3);
             this.pbTetris.Name = "pbTetris";
-            this.pbTetris.Size = new System.Drawing.Size(365, 553);
+            this.pbTetris.Size = new System.Drawing.Size(365, 602);
             this.pbTetris.TabIndex = 0;
             this.pbTetris.TabStop = false;
             this.pbTetris.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTetris_Paint_1);
@@ -48,7 +48,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.Controls.Add(this.pbTetris);
             this.Name = "TetrisControl";
-            this.Size = new System.Drawing.Size(371, 559);
+            this.Size = new System.Drawing.Size(371, 608);
             ((System.ComponentModel.ISupportInitialize)(this.pbTetris)).EndInit();
             this.ResumeLayout(false);
 

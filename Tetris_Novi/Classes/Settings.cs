@@ -11,7 +11,7 @@ using Tetris_Novi.Klase;
 
 namespace Tetris_Novi.Classes
 {
-    public class Settings:ICloneable
+    public class Settings
     {
 
         #region Attributes        
@@ -47,35 +47,7 @@ namespace Tetris_Novi.Classes
         }
 
 
-        #endregion
-
-        #region ICloneable Members
-
-        public object Clone()
-        {
-            //get the type of this instance
-            Type type = GetType();
-
-            //create binding flags object
-            BindingFlags flags = BindingFlags.Instance | BindingFlags.NonPublic |
-                                    BindingFlags.Public;
-
-            //get all the fields of this instance
-            FieldInfo[] fields = type.GetFields(flags);
-
-            //create new settings object
-            Settings sett = new Settings();
-
-            //now copy all the fields to the new object
-            foreach (FieldInfo fi in fields)
-            {
-                fi.SetValue(sett, fi.GetValue(this));
-            }
-
-            return sett;
-        }
-
-        #endregion
+        #endregion        
 
         #region Methods       
 
@@ -312,7 +284,7 @@ namespace Tetris_Novi.Classes
         [Category("Dimensions")]
         [Description("The width(height) of a single square in the tetris grid. Varies from 10 to 30")]
         [DefaultValue(20)]
-        public int SingleSquareWidth
+        public int Size
         {
             get
             {

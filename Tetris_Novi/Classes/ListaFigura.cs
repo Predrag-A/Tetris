@@ -35,7 +35,7 @@ namespace Tetris_Novi.Klase
             return _listaF[i];
         }
 
-        public void dodajFiguru(Shape obj)
+        public void AddShape(Shape obj)
         {
             if (obj != null)
                 _listaF.Add(obj);
@@ -45,14 +45,14 @@ namespace Tetris_Novi.Klase
             _listaF.Clear();
             
             //Linemo i dodajemo u listu plavi pravugaonik
-            Shape line = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.LineColor);
+            Shape line = new Shape(n1, Grid.Instance.Settings.LineColor);
             for(int i=0;i<n1;i++)
             {
                 line.Matrica[i][line.GlavnaKordinataInt] = true;
             }
 
             //Linemo kocku popunjenu celu,veliku
-            Shape bigSquare = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.BigSquareColor);
+            Shape bigSquare = new Shape(n1, Grid.Instance.Settings.BigSquareColor);
             for(int i=0;i<n1;i++)
             {
                 for(int j=0;j<n1;j++)
@@ -62,18 +62,18 @@ namespace Tetris_Novi.Klase
             }
 
             //Linemo malu kockicu
-            Shape smallSquare = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.SmallSquareColor);
+            Shape smallSquare = new Shape(n1, Grid.Instance.Settings.SmallSquareColor);
             smallSquare.Matrica[smallSquare.GlavnaKordinataInt][smallSquare.GlavnaKordinataInt] = true;
 
             //Linemo Cross mali
-            Shape cross = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.CrossColor);
+            Shape cross = new Shape(n1, Grid.Instance.Settings.CrossColor);
             for (int i = 0; i < n1; i++)
                 cross.Matrica[i][cross.GlavnaKordinataInt] = true;
             for (int j = 0; j < n1; j++)
                 cross.Matrica[cross.GlavnaKordinataInt][j] = true;
 
             //Linemo crvenu figuru
-            Shape triangle = new Shape(n1, Grid.ObjekatKlaseGrid.Settings.TriangleColor);
+            Shape triangle = new Shape(n1, Grid.Instance.Settings.TriangleColor);
             for(int i=0;i<n1;i++)
             {
                 triangle.Matrica[triangle.GlavnaKordinataInt][i] = true;
@@ -91,11 +91,11 @@ namespace Tetris_Novi.Klase
             _listaF.Add(triangle);
         }
 
-        public double vratiBrojFiguraUlisti()
+        public int vratiBrojFiguraUlisti()
         {
             return _listaF.Count;
         }
-
+        
 
     }
 }

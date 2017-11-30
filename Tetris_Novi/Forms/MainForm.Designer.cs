@@ -30,109 +30,41 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
-            this.lblNivo = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.lblVreme = new System.Windows.Forms.Label();
-            this.lblTrenutniRezultat = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.lblTrenutniBrojPoena = new System.Windows.Forms.Label();
+            this.preview = new System.Windows.Forms.PictureBox();
             this.msMeniIgrice = new System.Windows.Forms.MenuStrip();
             this.igraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.novaIgraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.pauzaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.endGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
             this.izlazToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leaderboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.timer1 = new System.Windows.Forms.Timer(this.components);
-            this.label1 = new System.Windows.Forms.Label();
-            this.lblPauzirano = new System.Windows.Forms.Label();
+            this.timerDrop = new System.Windows.Forms.Timer(this.components);
             this.TC = new Tetris_Novi.User_control.TetrisControl();
             this.panel = new System.Windows.Forms.Panel();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            this.lblPause = new System.Windows.Forms.Label();
+            this.lblNext = new System.Windows.Forms.Label();
+            this.lblScore = new System.Windows.Forms.Label();
+            this.lblTime = new System.Windows.Forms.Label();
+            this.lblLevel = new System.Windows.Forms.Label();
+            this.timerGame = new System.Windows.Forms.Timer(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).BeginInit();
             this.msMeniIgrice.SuspendLayout();
             this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // preview
             // 
-            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(8, 43);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(152, 151);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
-            this.pictureBox1.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
-            // 
-            // lblNivo
-            // 
-            this.lblNivo.AutoSize = true;
-            this.lblNivo.BackColor = System.Drawing.Color.Transparent;
-            this.lblNivo.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblNivo.ForeColor = System.Drawing.Color.Crimson;
-            this.lblNivo.Location = new System.Drawing.Point(395, 490);
-            this.lblNivo.Name = "lblNivo";
-            this.lblNivo.Size = new System.Drawing.Size(0, 20);
-            this.lblNivo.TabIndex = 6;
-            // 
-            // label3
-            // 
-            this.label3.AutoSize = true;
-            this.label3.BackColor = System.Drawing.Color.Transparent;
-            this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label3.ForeColor = System.Drawing.Color.Crimson;
-            this.label3.Location = new System.Drawing.Point(17, 307);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(43, 20);
-            this.label3.TabIndex = 5;
-            this.label3.Text = "Nivo";
-            // 
-            // lblVreme
-            // 
-            this.lblVreme.AutoSize = true;
-            this.lblVreme.BackColor = System.Drawing.Color.Transparent;
-            this.lblVreme.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblVreme.ForeColor = System.Drawing.Color.Crimson;
-            this.lblVreme.Location = new System.Drawing.Point(414, 519);
-            this.lblVreme.Name = "lblVreme";
-            this.lblVreme.Size = new System.Drawing.Size(0, 20);
-            this.lblVreme.TabIndex = 4;
-            // 
-            // lblTrenutniRezultat
-            // 
-            this.lblTrenutniRezultat.AutoSize = true;
-            this.lblTrenutniRezultat.BackColor = System.Drawing.Color.Transparent;
-            this.lblTrenutniRezultat.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblTrenutniRezultat.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTrenutniRezultat.Location = new System.Drawing.Point(414, 52);
-            this.lblTrenutniRezultat.Name = "lblTrenutniRezultat";
-            this.lblTrenutniRezultat.Size = new System.Drawing.Size(0, 20);
-            this.lblTrenutniRezultat.TabIndex = 3;
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.BackColor = System.Drawing.Color.Transparent;
-            this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label2.ForeColor = System.Drawing.Color.Crimson;
-            this.label2.Location = new System.Drawing.Point(17, 336);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(66, 20);
-            this.label2.TabIndex = 2;
-            this.label2.Text = "Vreme:";
-            // 
-            // lblTrenutniBrojPoena
-            // 
-            this.lblTrenutniBrojPoena.AutoSize = true;
-            this.lblTrenutniBrojPoena.BackColor = System.Drawing.Color.Transparent;
-            this.lblTrenutniBrojPoena.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblTrenutniBrojPoena.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTrenutniBrojPoena.Location = new System.Drawing.Point(3, 0);
-            this.lblTrenutniBrojPoena.Name = "lblTrenutniBrojPoena";
-            this.lblTrenutniBrojPoena.Size = new System.Drawing.Size(59, 20);
-            this.lblTrenutniBrojPoena.TabIndex = 0;
-            this.lblTrenutniBrojPoena.Text = "Poeni:";
+            this.preview.BackColor = System.Drawing.Color.Transparent;
+            this.preview.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.preview.Location = new System.Drawing.Point(25, 65);
+            this.preview.Name = "preview";
+            this.preview.Size = new System.Drawing.Size(152, 151);
+            this.preview.TabIndex = 0;
+            this.preview.TabStop = false;
+            this.preview.Visible = false;
+            this.preview.Paint += new System.Windows.Forms.PaintEventHandler(this.pictureBox1_Paint);
             // 
             // msMeniIgrice
             // 
@@ -151,6 +83,7 @@
             this.igraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.novaIgraToolStripMenuItem,
             this.pauzaToolStripMenuItem,
+            this.endGameToolStripMenuItem,
             this.toolStripSeparator1,
             this.izlazToolStripMenuItem});
             this.igraToolStripMenuItem.Name = "igraToolStripMenuItem";
@@ -173,6 +106,13 @@
             this.pauzaToolStripMenuItem.Text = "Pause";
             this.pauzaToolStripMenuItem.Click += new System.EventHandler(this.pauzaToolStripMenuItem_Click);
             // 
+            // endGameToolStripMenuItem
+            // 
+            this.endGameToolStripMenuItem.Name = "endGameToolStripMenuItem";
+            this.endGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F3;
+            this.endGameToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
+            this.endGameToolStripMenuItem.Text = "End Game";
+            // 
             // toolStripSeparator1
             // 
             this.toolStripSeparator1.Name = "toolStripSeparator1";
@@ -181,8 +121,9 @@
             // izlazToolStripMenuItem
             // 
             this.izlazToolStripMenuItem.Name = "izlazToolStripMenuItem";
+            this.izlazToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
             this.izlazToolStripMenuItem.Size = new System.Drawing.Size(151, 22);
-            this.izlazToolStripMenuItem.Text = "Izlaz";
+            this.izlazToolStripMenuItem.Text = "Exit";
             this.izlazToolStripMenuItem.Click += new System.EventHandler(this.izlazToolStripMenuItem_Click);
             // 
             // leaderboardToolStripMenuItem
@@ -199,107 +140,140 @@
             this.settingsToolStripMenuItem.Text = "Settings";
             this.settingsToolStripMenuItem.Click += new System.EventHandler(this.settingsToolStripMenuItem_Click);
             // 
-            // timer1
+            // timerDrop
             // 
-            this.timer1.Interval = 1000;
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
-            // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.BackColor = System.Drawing.Color.Transparent;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.label1.ForeColor = System.Drawing.Color.Crimson;
-            this.label1.Location = new System.Drawing.Point(3, 20);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(130, 20);
-            this.label1.TabIndex = 10;
-            this.label1.Text = "Sledeca figura:";
-            // 
-            // lblPauzirano
-            // 
-            this.lblPauzirano.AutoSize = true;
-            this.lblPauzirano.BackColor = System.Drawing.Color.Transparent;
-            this.lblPauzirano.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
-            this.lblPauzirano.ForeColor = System.Drawing.Color.Crimson;
-            this.lblPauzirano.Location = new System.Drawing.Point(16, 209);
-            this.lblPauzirano.Name = "lblPauzirano";
-            this.lblPauzirano.Size = new System.Drawing.Size(118, 25);
-            this.lblPauzirano.TabIndex = 11;
-            this.lblPauzirano.Text = "Pauzirano";
-            this.lblPauzirano.Visible = false;
+            this.timerDrop.Interval = 1000;
+            this.timerDrop.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // TC
             // 
             this.TC.BackColor = System.Drawing.Color.Transparent;
-            this.TC.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.TC.Location = new System.Drawing.Point(0, 24);
+            this.TC.Location = new System.Drawing.Point(0, 27);
             this.TC.Name = "TC";
-            this.TC.Size = new System.Drawing.Size(517, 545);
+            this.TC.Size = new System.Drawing.Size(311, 614);
             this.TC.TabIndex = 9;
             // 
             // panel
             // 
-            this.panel.Controls.Add(this.lblTrenutniBrojPoena);
-            this.panel.Controls.Add(this.lblPauzirano);
-            this.panel.Controls.Add(this.label3);
-            this.panel.Controls.Add(this.label1);
-            this.panel.Controls.Add(this.label2);
-            this.panel.Controls.Add(this.pictureBox1);
+            this.panel.Controls.Add(this.lblPause);
+            this.panel.Controls.Add(this.lblNext);
+            this.panel.Controls.Add(this.lblScore);
+            this.panel.Controls.Add(this.lblTime);
+            this.panel.Controls.Add(this.lblLevel);
+            this.panel.Controls.Add(this.preview);
             this.panel.Dock = System.Windows.Forms.DockStyle.Right;
             this.panel.Location = new System.Drawing.Point(317, 24);
             this.panel.Name = "panel";
-            this.panel.Size = new System.Drawing.Size(200, 545);
+            this.panel.Size = new System.Drawing.Size(200, 617);
             this.panel.TabIndex = 12;
+            // 
+            // lblPause
+            // 
+            this.lblPause.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblPause.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblPause.ForeColor = System.Drawing.Color.Crimson;
+            this.lblPause.Location = new System.Drawing.Point(0, 548);
+            this.lblPause.Name = "lblPause";
+            this.lblPause.Size = new System.Drawing.Size(200, 23);
+            this.lblPause.TabIndex = 16;
+            this.lblPause.Text = "Paused";
+            this.lblPause.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblNext
+            // 
+            this.lblNext.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblNext.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblNext.ForeColor = System.Drawing.Color.Crimson;
+            this.lblNext.Location = new System.Drawing.Point(0, 23);
+            this.lblNext.Name = "lblNext";
+            this.lblNext.Size = new System.Drawing.Size(200, 23);
+            this.lblNext.TabIndex = 15;
+            this.lblNext.Text = "Next Figure:";
+            this.lblNext.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblScore
+            // 
+            this.lblScore.Dock = System.Windows.Forms.DockStyle.Top;
+            this.lblScore.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblScore.ForeColor = System.Drawing.Color.Crimson;
+            this.lblScore.Location = new System.Drawing.Point(0, 0);
+            this.lblScore.Name = "lblScore";
+            this.lblScore.Size = new System.Drawing.Size(200, 23);
+            this.lblScore.TabIndex = 14;
+            this.lblScore.Text = "Score:";
+            this.lblScore.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblTime
+            // 
+            this.lblTime.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblTime.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblTime.ForeColor = System.Drawing.Color.Crimson;
+            this.lblTime.Location = new System.Drawing.Point(0, 571);
+            this.lblTime.Name = "lblTime";
+            this.lblTime.Size = new System.Drawing.Size(200, 23);
+            this.lblTime.TabIndex = 13;
+            this.lblTime.Text = "Time:";
+            this.lblTime.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // lblLevel
+            // 
+            this.lblLevel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.lblLevel.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(204)));
+            this.lblLevel.ForeColor = System.Drawing.Color.Crimson;
+            this.lblLevel.Location = new System.Drawing.Point(0, 594);
+            this.lblLevel.Name = "lblLevel";
+            this.lblLevel.Size = new System.Drawing.Size(200, 23);
+            this.lblLevel.TabIndex = 12;
+            this.lblLevel.Text = "Level:";
+            this.lblLevel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
+            // timerGame
+            // 
+            this.timerGame.Interval = 1000;
+            this.timerGame.Tick += new System.EventHandler(this.timerGame_Tick);
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(517, 569);
+            this.ClientSize = new System.Drawing.Size(517, 641);
             this.Controls.Add(this.panel);
-            this.Controls.Add(this.lblNivo);
-            this.Controls.Add(this.lblVreme);
             this.Controls.Add(this.TC);
-            this.Controls.Add(this.lblTrenutniRezultat);
             this.Controls.Add(this.msMeniIgrice);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Tetris";
-            this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.preview)).EndInit();
             this.msMeniIgrice.ResumeLayout(false);
             this.msMeniIgrice.PerformLayout();
             this.panel.ResumeLayout(false);
-            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox pictureBox1;
-        private System.Windows.Forms.Label lblVreme;
-        private System.Windows.Forms.Label lblTrenutniRezultat;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label lblTrenutniBrojPoena;
+        private System.Windows.Forms.PictureBox preview;
         private System.Windows.Forms.MenuStrip msMeniIgrice;
         private System.Windows.Forms.ToolStripMenuItem igraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem novaIgraToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem pauzaToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem izlazToolStripMenuItem;
-        private System.Windows.Forms.Timer timer1;
+        private System.Windows.Forms.Timer timerDrop;
         private User_control.TetrisControl TC;
-        private System.Windows.Forms.Label lblNivo;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label lblPauzirano;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem leaderboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
         private System.Windows.Forms.Panel panel;
+        private System.Windows.Forms.Label lblTime;
+        private System.Windows.Forms.Label lblLevel;
+        private System.Windows.Forms.Timer timerGame;
+        private System.Windows.Forms.Label lblScore;
+        private System.Windows.Forms.Label lblPause;
+        private System.Windows.Forms.Label lblNext;
+        private System.Windows.Forms.ToolStripMenuItem endGameToolStripMenuItem;
     }
 }
 
