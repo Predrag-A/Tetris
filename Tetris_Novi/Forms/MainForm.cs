@@ -28,6 +28,8 @@ namespace Tetris_Novi
         public MainForm()
         { 
             InitializeComponent();
+            this.Width = (int)(TC.Width * 1.1);
+            this.Height = (int)(TC.Height * 1.1);
             postaviVrednosti();
             ListaFigura.Instance.dodajOblike(_kolikoSmallSquareSuFigure);
             postavi();
@@ -372,6 +374,10 @@ namespace Tetris_Novi
             {
                 Grid.ObjekatKlaseGrid.Resize();
                 TC.Refresh();
+                TC.Width = Grid.ObjekatKlaseGrid.N * Grid.ObjekatKlaseGrid.Settings.SingleSquareWidth;
+                TC.Height = Grid.ObjekatKlaseGrid.M * Grid.ObjekatKlaseGrid.Settings.SingleSquareWidth;
+                this.Width = (int)(TC.Width*1.1);
+                this.Height = (int)(TC.Height*1.1);
             }
         }
     }

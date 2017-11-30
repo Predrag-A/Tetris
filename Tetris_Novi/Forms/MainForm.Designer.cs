@@ -49,14 +49,16 @@
             this.label1 = new System.Windows.Forms.Label();
             this.lblPauzirano = new System.Windows.Forms.Label();
             this.TC = new Tetris_Novi.User_control.TetrisControl();
+            this.panel = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.msMeniIgrice.SuspendLayout();
+            this.panel.SuspendLayout();
             this.SuspendLayout();
             // 
             // pictureBox1
             // 
             this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
-            this.pictureBox1.Location = new System.Drawing.Point(353, 112);
+            this.pictureBox1.Location = new System.Drawing.Point(8, 43);
             this.pictureBox1.Name = "pictureBox1";
             this.pictureBox1.Size = new System.Drawing.Size(152, 151);
             this.pictureBox1.TabIndex = 0;
@@ -80,7 +82,7 @@
             this.label3.BackColor = System.Drawing.Color.Transparent;
             this.label3.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label3.ForeColor = System.Drawing.Color.Crimson;
-            this.label3.Location = new System.Drawing.Point(349, 490);
+            this.label3.Location = new System.Drawing.Point(17, 307);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(43, 20);
             this.label3.TabIndex = 5;
@@ -114,7 +116,7 @@
             this.label2.BackColor = System.Drawing.Color.Transparent;
             this.label2.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label2.ForeColor = System.Drawing.Color.Crimson;
-            this.label2.Location = new System.Drawing.Point(351, 519);
+            this.label2.Location = new System.Drawing.Point(17, 336);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(66, 20);
             this.label2.TabIndex = 2;
@@ -126,7 +128,7 @@
             this.lblTrenutniBrojPoena.BackColor = System.Drawing.Color.Transparent;
             this.lblTrenutniBrojPoena.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblTrenutniBrojPoena.ForeColor = System.Drawing.Color.Crimson;
-            this.lblTrenutniBrojPoena.Location = new System.Drawing.Point(349, 52);
+            this.lblTrenutniBrojPoena.Location = new System.Drawing.Point(3, 0);
             this.lblTrenutniBrojPoena.Name = "lblTrenutniBrojPoena";
             this.lblTrenutniBrojPoena.Size = new System.Drawing.Size(59, 20);
             this.lblTrenutniBrojPoena.TabIndex = 0;
@@ -208,7 +210,7 @@
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.label1.ForeColor = System.Drawing.Color.Crimson;
-            this.label1.Location = new System.Drawing.Point(349, 89);
+            this.label1.Location = new System.Drawing.Point(3, 20);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(130, 20);
             this.label1.TabIndex = 10;
@@ -220,7 +222,7 @@
             this.lblPauzirano.BackColor = System.Drawing.Color.Transparent;
             this.lblPauzirano.Font = new System.Drawing.Font("Microsoft Sans Serif", 15.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
             this.lblPauzirano.ForeColor = System.Drawing.Color.Crimson;
-            this.lblPauzirano.Location = new System.Drawing.Point(355, 339);
+            this.lblPauzirano.Location = new System.Drawing.Point(16, 209);
             this.lblPauzirano.Name = "lblPauzirano";
             this.lblPauzirano.Size = new System.Drawing.Size(118, 25);
             this.lblPauzirano.TabIndex = 11;
@@ -230,27 +232,37 @@
             // TC
             // 
             this.TC.BackColor = System.Drawing.Color.Transparent;
-            this.TC.Location = new System.Drawing.Point(12, 27);
+            this.TC.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.TC.Location = new System.Drawing.Point(0, 24);
             this.TC.Name = "TC";
-            this.TC.Size = new System.Drawing.Size(314, 534);
+            this.TC.Size = new System.Drawing.Size(517, 545);
             this.TC.TabIndex = 9;
+            // 
+            // panel
+            // 
+            this.panel.Controls.Add(this.lblTrenutniBrojPoena);
+            this.panel.Controls.Add(this.lblPauzirano);
+            this.panel.Controls.Add(this.label3);
+            this.panel.Controls.Add(this.label1);
+            this.panel.Controls.Add(this.label2);
+            this.panel.Controls.Add(this.pictureBox1);
+            this.panel.Dock = System.Windows.Forms.DockStyle.Right;
+            this.panel.Location = new System.Drawing.Point(317, 24);
+            this.panel.Name = "panel";
+            this.panel.Size = new System.Drawing.Size(200, 545);
+            this.panel.TabIndex = 12;
             // 
             // MainForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(517, 569);
-            this.Controls.Add(this.lblPauzirano);
-            this.Controls.Add(this.label1);
+            this.Controls.Add(this.panel);
             this.Controls.Add(this.lblNivo);
-            this.Controls.Add(this.pictureBox1);
-            this.Controls.Add(this.label3);
             this.Controls.Add(this.lblVreme);
             this.Controls.Add(this.TC);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.lblTrenutniRezultat);
             this.Controls.Add(this.msMeniIgrice);
-            this.Controls.Add(this.lblTrenutniBrojPoena);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "MainForm";
@@ -260,6 +272,8 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             this.msMeniIgrice.ResumeLayout(false);
             this.msMeniIgrice.PerformLayout();
+            this.panel.ResumeLayout(false);
+            this.panel.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -285,6 +299,7 @@
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
         private System.Windows.Forms.ToolStripMenuItem leaderboardToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
+        private System.Windows.Forms.Panel panel;
     }
 }
 

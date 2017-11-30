@@ -98,7 +98,7 @@ namespace Tetris_Novi.Classes
 
             squareWidth = 30;
             columns = 10;
-            rows = 17;
+            rows = 20;
 
             startLevel = 1;
         }
@@ -348,7 +348,7 @@ namespace Tetris_Novi.Classes
         }
 
         [Category("Dimensions")]
-        [Description("The number of rows in the tetris grid. Varies from 10 to 30")]
+        [Description("The number of rows in the tetris grid. Varies from 15 to 30")]
         [DefaultValue(20)]
         public int Rows
         {
@@ -358,7 +358,7 @@ namespace Tetris_Novi.Classes
             }
             set
             {
-                if (value > 30 || value < 10)
+                if (value > 30 || value < 15)
                     return;
                 if (rows == value)
                     return;

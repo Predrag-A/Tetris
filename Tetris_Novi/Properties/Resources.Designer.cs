@@ -59,15 +59,5 @@ namespace Tetris_Novi.Properties {
                 resourceCulture = value;
             }
         }
-        
-        /// <summary>
-        ///   Looks up a localized resource of type System.Drawing.Bitmap.
-        /// </summary>
-        internal static System.Drawing.Bitmap nebula_2265484_960_720 {
-            get {
-                object obj = ResourceManager.GetObject("nebula-2265484_960_720", resourceCulture);
-                return ((System.Drawing.Bitmap)(obj));
-            }
-        }
     }
 }

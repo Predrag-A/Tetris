@@ -51,7 +51,7 @@ namespace Tetris_Novi.User_control
 
                     }
                 }
-            }
+            }            
         }
 
         private void pbTetris_Paint_1(object sender, PaintEventArgs e)
