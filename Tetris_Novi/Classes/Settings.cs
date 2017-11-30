@@ -83,6 +83,7 @@ namespace Tetris.Classes
         #region Colors Properties
 
         [Category("Figure Colors")]
+        [DisplayName("Small Square Color")]
         [Description("The Small square figure back color")]
         public Color SmallSquareColor
         {
@@ -97,6 +98,7 @@ namespace Tetris.Classes
         }
 
         [Category("Figure Colors")]
+        [DisplayName("Cross Color")]
         [Description("The Cross figure back color")]
         public Color CrossColor
         {
@@ -111,6 +113,7 @@ namespace Tetris.Classes
         }
 
         [Category("Figure Colors")]
+        [DisplayName("Big Square Color")]
         [Description("The Big Square figure back color")]
         public Color BigSquareColor
         {
@@ -125,6 +128,7 @@ namespace Tetris.Classes
         }
 
         [Category("Figure Colors")]
+        [DisplayName("Line Color")]
         [Description("The Line figure back color")]
         public Color LineColor
         {
@@ -139,6 +143,7 @@ namespace Tetris.Classes
         }
 
         [Category("Figure Colors")]
+        [DisplayName("Triangle Color")]
         [Description("The Triangle figure back color")]
         public Color TriangleColor
         {
@@ -153,7 +158,8 @@ namespace Tetris.Classes
         }
 
         [Category("Tetris Colors")]
-        [Description("Border of tetris squares")]
+        [DisplayName("Square Border Color")]
+        [Description("Color of the border of tetris squares")]
         public Color TetrisBorder
         {
             get
@@ -167,7 +173,8 @@ namespace Tetris.Classes
         }        
 
         [Category("Tetris Colors")]
-        [Description("Tetris grid background")]
+        [DisplayName("Tetris Background Color")]
+        [Description("Color of the tetris grid background")]
         public Color TetrisBackground
         {
             get
@@ -185,6 +192,7 @@ namespace Tetris.Classes
         #region Keyboard Properties
 
         [Category("Keyboard")]
+        [DisplayName("Left Key")]
         [Description("The key value for moving figures left")]
         public Keys LeftKey
         {
@@ -197,12 +205,9 @@ namespace Tetris.Classes
                 leftKey = value;
             }
         }
-        protected bool ShouldSerializeLeftKey()
-        {
-            return leftKey != Keys.Left;
-        }
 
         [Category("Keyboard")]
+        [DisplayName("Right Key")]
         [Description("The key value for moving figures right")]
         public Keys RightKey
         {
@@ -215,13 +220,9 @@ namespace Tetris.Classes
                 rightKey = value;
             }
         }
-        protected bool ShouldSerializeRightKey()
-        {
-            return rightKey != Keys.Right;
-        }
-
 
         [Category("Keyboard")]
+        [DisplayName("Down Key")]
         [Description("The key value for moving figures down")]
         public Keys DownKey
         {
@@ -234,13 +235,9 @@ namespace Tetris.Classes
                 downKey = value;
             }
         }
-        protected bool ShouldSerializeDownKey()
-        {
-            return downKey != Keys.Down;
-        }
-
 
         [Category("Keyboard")]
+        [DisplayName("Rotate Key")]
         [Description("The key value for rotating figures")]
         public Keys RotateKey
         {
@@ -253,12 +250,9 @@ namespace Tetris.Classes
                 rotateKey = value;
             }
         }
-        protected bool ShouldSerializeRotateKey()
-        {
-            return rotateKey != Keys.Up;
-        }
 
         [Category("Keyboard")]
+        [DisplayName("Pause Key")]
         [Description("The key value for pausing game")]
         public Keys PauseKey
         {
@@ -271,12 +265,6 @@ namespace Tetris.Classes
                 pauseKey = value;
             }
         }
-        protected bool ShouldSerializePauseKey()
-        {
-            return pauseKey != Keys.P;
-        }
-
-
 
         #endregion
 
@@ -343,6 +331,7 @@ namespace Tetris.Classes
 
         #region Misc Properties
 
+        [DisplayName("Start Level")]
         [Description("The start level. Varies from 1 to 12")]
         public byte StartLevel
         {
@@ -356,10 +345,6 @@ namespace Tetris.Classes
                     return;
                 startLevel = value;
             }
-        }
-        protected bool ShouldSerializeStartLevel()
-        {
-            return startLevel != 1;
         }
 
         #endregion

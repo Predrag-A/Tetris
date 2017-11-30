@@ -51,17 +51,14 @@ namespace Tetris.Klase
         //Adds a new shape and colors in the corresponding squares in the grid
         public void AddShape(Shape obj)
         {
-            int icordinata = obj.MainPoint.X;
-            int jcordinata = obj.MainPoint.Y;
-
             for(int i=0;i<obj.Dim;i++)
             {
                 for(int j=0;j<obj.Dim;j++)
                 {
                     if(obj.Matrix[i,j])
                     {
-                        Matrix[i + icordinata,j + jcordinata].Filled = true;
-                        Matrix[i + icordinata,j + jcordinata].Brush = new SolidBrush(obj.Color);
+                        Matrix[i + obj.Location.X,j + obj.Location.Y].Filled = true;
+                        Matrix[i + obj.Location.X,j + obj.Location.Y].Brush = new SolidBrush(obj.Color);
                     }
                 }
             }
@@ -70,16 +67,14 @@ namespace Tetris.Klase
         //Removes the shape from the grid
         public void DeleteShape(Shape obj)
         {
-            int icoordinata = obj.MainPoint.X;
-            int jcoordinata = obj.MainPoint.Y;
             for(int i=0;i<obj.Dim;i++)
             {
                 for(int j=0;j<obj.Dim;j++)
                 {
                     if(obj.Matrix[i,j])
                     {
-                        Matrix[i + icoordinata, j + jcoordinata].Filled = false;
-                        Matrix[i + icoordinata, j + jcoordinata].Brush = new SolidBrush(Settings.TetrisBackground);
+                        Matrix[i + obj.Location.X, j + obj.Location.Y].Filled = false;
+                        Matrix[i + obj.Location.X, j + obj.Location.Y].Brush = new SolidBrush(Settings.TetrisBackground);
                     }
                 }
             }
@@ -88,8 +83,8 @@ namespace Tetris.Klase
         //Checks if the location of the shape is already taken
         public bool IsTaken(Shape obj)
         {
-            int icoordinata = obj.MainPoint.X;
-            int jcoordinata = obj.MainPoint.Y;
+            int icoordinata = obj.Location.X;
+            int jcoordinata = obj.Location.Y;
             int proveri1 = obj.Dim - 1 + icoordinata;
             int proveri2 = obj.Dim - 1 + jcoordinata;
             int provera3 = jcoordinata;

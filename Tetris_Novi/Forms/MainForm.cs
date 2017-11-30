@@ -15,7 +15,7 @@ using Tetris.User_control;
 namespace Tetris
 {
 
-    //TODO Resize problem
+    //TODO Resize problem, IsTaken function
 
     public partial class MainForm : Form
     {
@@ -42,7 +42,7 @@ namespace Tetris
             Initialize();
             lblPause.Visible = false;
             _list = new PlayerList();
-            //_list.Deserialize("Leaderboard.xml");
+            _list.Deserialize("Leaderboard.xml");
             _gameRunning = false;
         }
 
@@ -50,91 +50,76 @@ namespace Tetris
 
         #region Methods
 
+        //Initializes the starting values of a game
         public void Initialize()
         {
+            _pause = false;
             _nextShape = GetShape();
             _score = 0;
+            _time = 0;
             _level = Grid.Instance.Settings.StartLevel;
             lblScore.Text = "Score:" + _score.ToString();
         }
 
+        //Sets the current shape as the one in the preview and gets a new one for the preview
         public void SetCurrent()
         {
             _currentShape = _nextShape;
             _nextShape = GetShape();
         }
 
+        //Method that moves the current shape down
         private void MoveDown()
         {
-            //obrisemo je sa tebele
+            //Delete, move position, check if occupied
             Grid.Instance.DeleteShape(_currentShape);
-            //pomerimo
-            _currentShape.SetLocation(new Point(_currentShape.MainPoint.X + 1, _currentShape.MainPoint.Y));
-            //pitamo da li ima mesta za nju gde sam je pomerio
+            _currentShape.SetLocation(new Point(_currentShape.Location.X + 1, _currentShape.Location.Y));            
             if (Grid.Instance.IsTaken(_currentShape))
             {
-                //ako nema vratim joj trenutnu poziciju
-                _currentShape.SetLocation(new Point(_currentShape.MainPoint.X - 1, _currentShape.MainPoint.Y));
-                //dodamo je na staru poziciju I proveravamo redove da se nije spojio ceo
+                //If the shape cannot move, return to original position and check for completed lines
+                _currentShape.SetLocation(new Point(_currentShape.Location.X - 1, _currentShape.Location.Y));                
                 Grid.Instance.AddShape(_currentShape);
                 _score += ((int)Math.Pow(Grid.Instance.DeleteRows(), 2) * 100);
                 lblScore.Text = "Score: " + _score.ToString();
+                //Set the next shape as current. If the position is taken after setting the next shape, the game is over
                 SetCurrent();
                 if (Grid.Instance.IsTaken(_currentShape))
-                {
-                    //izgubljena igra 
+                {                     
                     GameEnd();
                     return;
                 }
-                Grid.Instance.AddShape(_currentShape); //ako ne dodajemo je u tablu
+                Grid.Instance.AddShape(_currentShape);
 
             }
             else
             {
+                //The shape moves down normally if the position is unoccupied
                 Grid.Instance.AddShape(_currentShape);
 
             }
             this.Refresh();
         }
 
+        //Method that gets called after game ends
         public void GameEnd()
         {
             _gameRunning = false;
             timerGame.Stop();
             timerDrop.Stop();
-            if (_score == 0)
-            {
-                DialogResult s = MessageBox.Show("Game over. Do you want to start another game?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (s == DialogResult.Yes)
-                {
-                    novaIgraToolStripMenuItem.PerformClick();
-                }
-                else
-                    Grid.Instance.Initialize();
-            }
-            else
+            
+            if(_score > 0)
             {
                 _list.Add(new Player(_playerName, _score));
-                _list.Serialize("Leaderboard.xml");                
-                
-                DialogResult s = MessageBox.Show("Game over. Do you want to start another game?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
-                if (s == DialogResult.Yes)
-                {
-                    novaIgraToolStripMenuItem.PerformClick();
-                }
-                else
-                {
-                    Grid.Instance.Initialize();
-                }
+                _list.Serialize("Leaderboard.xml");
             }
-        }
-
-        public void promeniTrenutnu()
-        {
-            Grid.Instance.DeleteShape(_currentShape);
-            _currentShape = GetShape();
-            Grid.Instance.AddShape(_currentShape);
-        }
+            DialogResult s = MessageBox.Show("Game over. Do you want to start another game?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            Grid.Instance.Initialize();
+            if (s == DialogResult.Yes)
+            {
+                newGameToolStripMenuItem.PerformClick();
+            }
+            
+        }        
 
         //Returns a random shape
         public Shape GetShape()
@@ -261,38 +246,16 @@ namespace Tetris
 
         #endregion
 
-        #region Events
+        #region Events        
 
-        private void novaIgraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (_gameRunning)
-                return;
-            NameForm frm = new NameForm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                _gameRunning = true;
-                _playerName = frm.PlayerName;
-                preview.Visible = true;
-                Initialize();
-                _pause = false;
-                _time = 0;
-                SetCurrent();
-                timerGame.Start();
-                timerDrop.Start();
-                Grid.Instance.AddShape(_currentShape);
-                this.Refresh();
-            }
-        }
-
-        //funkcija koja nam dozvoljava da koristimo strelice nasao na steckoverflow
+        //Movement handler
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
-            //ako nije ukljucen tajmer to znaci da je igrica na puzi
-            if (timerDrop.Enabled)
-            {
+            //Does not work if the game is not running
+            if (_gameRunning)
+            {                
                 if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
-                {
-                    //ovo je slicno kao pomeranje na dole
+                {                    
                     int move;
                     if (keyData == Grid.Instance.Settings.LeftKey)
                     {
@@ -300,11 +263,11 @@ namespace Tetris
                     }
                     else
                         move = 1;
-                    Grid.Instance.DeleteShape(_currentShape); //obrisemo ga
-                    _currentShape.SetLocation(new Point(_currentShape.MainPoint.X, _currentShape.MainPoint.Y + move));
+                    Grid.Instance.DeleteShape(_currentShape);
+                    _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y + move));
                     if (Grid.Instance.IsTaken(_currentShape))
                     {
-                        _currentShape.SetLocation(new Point(_currentShape.MainPoint.X, _currentShape.MainPoint.Y - move));
+                        _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y - move));
                         Grid.Instance.AddShape(_currentShape);
                     }
                     else
@@ -345,7 +308,7 @@ namespace Tetris
                 //}
                 if (keyData == Grid.Instance.Settings.PauseKey)
                 {
-                    pauzaToolStripMenuItem.PerformClick();
+                    pauseToolStripMenuItem.PerformClick();
                 }
                 //if (keyData == Keys.N)
                 //{
@@ -353,10 +316,69 @@ namespace Tetris
                 //}
             }
             return base.ProcessCmdKey(ref msg, keyData);
-        }
-        
+        }        
 
-        private void pauzaToolStripMenuItem_Click(object sender, EventArgs e)
+        //Event that paints the preivew shape
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle next;
+            for (int i = 0; i < _nextShape.Dim; i++)
+            {
+                for (int j = 0; j < _nextShape.Dim; j++)
+                {
+                    Color chosen = Color.Transparent;
+                    if (_nextShape.Matrix[i,j])
+                    {
+                        chosen = _nextShape.Color;
+                    }
+                    next = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
+                        new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
+                    e.Graphics.FillRectangle(new SolidBrush(chosen), next);
+                }
+            }
+        }
+
+
+        #region Timer Events
+
+        private void timerDown_Tick(object sender, EventArgs e)
+        {
+            SetLevel();
+            MoveDown();
+        }
+
+        private void timerGame_Tick(object sender, EventArgs e)
+        {
+            _time++;
+            lblTime.Text = "Time: " + _time.ToString();
+        }
+
+        #endregion
+
+        #region MenuStrip Events
+
+        //Event that triggers to start the game. Cannot be used if game is already running
+        private void newGameToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (_gameRunning)
+                return;
+            NameForm frm = new NameForm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                _gameRunning = true;
+                _playerName = frm.PlayerName;
+                preview.Visible = true;
+                Initialize();
+                SetCurrent();
+                timerGame.Start();
+                timerDrop.Start();
+                Grid.Instance.AddShape(_currentShape);
+                this.Refresh();
+            }
+        }
+
+        //Pauses the game
+        private void pauseToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!_gameRunning)
                 return;
@@ -366,7 +388,7 @@ namespace Tetris
                 timerDrop.Stop();
                 _pause = true;
                 lblPause.Visible = true;
-                pauzaToolStripMenuItem.Text = "Continue";
+                pauseToolStripMenuItem.Text = "Continue";
                 this.Refresh();
             }
             else
@@ -379,33 +401,7 @@ namespace Tetris
             }
         }
 
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle zaSledeca;
-            for (int i = 0; i < _nextShape.Dim; i++)
-            {
-                for (int j = 0; j < _nextShape.Dim; j++)
-                {
-                    Color chosen = Color.Transparent;
-                    if (_nextShape.Matrix[i,j])
-                    {
-                        chosen = _nextShape.Color;
-                    }
-                    zaSledeca = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
-                        new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
-                    e.Graphics.FillRectangle(new SolidBrush(chosen), zaSledeca);
-                }
-            }
-        }
-        
-    
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            SetLevel();
-            MoveDown();
-        }
-
-        private void izlazToolStripMenuItem_Click(object sender, EventArgs e)
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             timerGame.Stop();
             timerDrop.Stop();          
@@ -420,7 +416,7 @@ namespace Tetris
             }
         }
 
-        private void najboljiRezultatiToolStripMenuItem_Click(object sender, EventArgs e)
+        private void leaderboardToolStripMenuItem_Click(object sender, EventArgs e)
         {
             var frm = new LeaderboardForm(_list);
             frm.ShowDialog();
@@ -430,7 +426,10 @@ namespace Tetris
         {
             if (_gameRunning)
                 return;
-            if (TC.ShowOptions() == DialogResult.OK)
+            
+            OptionsForm frm = new OptionsForm(Grid.Instance.Settings);
+
+            if (frm.ShowDialog() == DialogResult.OK)
             {
                 Grid.Instance.Initialize();
                 TC.Refresh();
@@ -440,19 +439,15 @@ namespace Tetris
                 lblNext.ForeColor = Grid.Instance.Settings.TetrisBorder;
             }
         }
-
-        private void timerGame_Tick(object sender, EventArgs e)
-        {
-            _time++;
-            lblTime.Text = "Time: " + _time.ToString();
-        }
-
+        
         private void endGameToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (!_gameRunning)
                 return;
             GameEnd();
         }
+
+        #endregion
 
         #endregion
 

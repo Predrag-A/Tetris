@@ -33,11 +33,11 @@
             this.preview = new System.Windows.Forms.PictureBox();
             this.msMeniIgrice = new System.Windows.Forms.MenuStrip();
             this.igraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.novaIgraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pauzaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.newGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.pauseToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.endGameToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
-            this.izlazToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.leaderboardToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.timerDrop = new System.Windows.Forms.Timer(this.components);
@@ -81,30 +81,30 @@
             // igraToolStripMenuItem
             // 
             this.igraToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.novaIgraToolStripMenuItem,
-            this.pauzaToolStripMenuItem,
+            this.newGameToolStripMenuItem,
+            this.pauseToolStripMenuItem,
             this.endGameToolStripMenuItem,
             this.toolStripSeparator1,
-            this.izlazToolStripMenuItem});
+            this.exitToolStripMenuItem});
             this.igraToolStripMenuItem.Name = "igraToolStripMenuItem";
             this.igraToolStripMenuItem.Size = new System.Drawing.Size(37, 20);
             this.igraToolStripMenuItem.Text = "File";
             // 
-            // novaIgraToolStripMenuItem
+            // newGameToolStripMenuItem
             // 
-            this.novaIgraToolStripMenuItem.Name = "novaIgraToolStripMenuItem";
-            this.novaIgraToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
-            this.novaIgraToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.novaIgraToolStripMenuItem.Text = "New Game";
-            this.novaIgraToolStripMenuItem.Click += new System.EventHandler(this.novaIgraToolStripMenuItem_Click);
+            this.newGameToolStripMenuItem.Name = "newGameToolStripMenuItem";
+            this.newGameToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F1;
+            this.newGameToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.newGameToolStripMenuItem.Text = "New Game";
+            this.newGameToolStripMenuItem.Click += new System.EventHandler(this.newGameToolStripMenuItem_Click);
             // 
-            // pauzaToolStripMenuItem
+            // pauseToolStripMenuItem
             // 
-            this.pauzaToolStripMenuItem.Name = "pauzaToolStripMenuItem";
-            this.pauzaToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
-            this.pauzaToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.pauzaToolStripMenuItem.Text = "Pause";
-            this.pauzaToolStripMenuItem.Click += new System.EventHandler(this.pauzaToolStripMenuItem_Click);
+            this.pauseToolStripMenuItem.Name = "pauseToolStripMenuItem";
+            this.pauseToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F2;
+            this.pauseToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.pauseToolStripMenuItem.Text = "Pause";
+            this.pauseToolStripMenuItem.Click += new System.EventHandler(this.pauseToolStripMenuItem_Click);
             // 
             // endGameToolStripMenuItem
             // 
@@ -119,20 +119,20 @@
             this.toolStripSeparator1.Name = "toolStripSeparator1";
             this.toolStripSeparator1.Size = new System.Drawing.Size(149, 6);
             // 
-            // izlazToolStripMenuItem
+            // exitToolStripMenuItem
             // 
-            this.izlazToolStripMenuItem.Name = "izlazToolStripMenuItem";
-            this.izlazToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
-            this.izlazToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.izlazToolStripMenuItem.Text = "Exit";
-            this.izlazToolStripMenuItem.Click += new System.EventHandler(this.izlazToolStripMenuItem_Click);
+            this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
+            this.exitToolStripMenuItem.ShortcutKeys = System.Windows.Forms.Keys.F4;
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Text = "Exit";
+            this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
             // leaderboardToolStripMenuItem
             // 
             this.leaderboardToolStripMenuItem.Name = "leaderboardToolStripMenuItem";
             this.leaderboardToolStripMenuItem.Size = new System.Drawing.Size(85, 20);
             this.leaderboardToolStripMenuItem.Text = "Leaderboard";
-            this.leaderboardToolStripMenuItem.Click += new System.EventHandler(this.najboljiRezultatiToolStripMenuItem_Click);
+            this.leaderboardToolStripMenuItem.Click += new System.EventHandler(this.leaderboardToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -144,7 +144,7 @@
             // timerDrop
             // 
             this.timerDrop.Interval = 1000;
-            this.timerDrop.Tick += new System.EventHandler(this.timer1_Tick);
+            this.timerDrop.Tick += new System.EventHandler(this.timerDown_Tick);
             // 
             // TC
             // 
@@ -259,9 +259,9 @@
         private System.Windows.Forms.PictureBox preview;
         private System.Windows.Forms.MenuStrip msMeniIgrice;
         private System.Windows.Forms.ToolStripMenuItem igraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem novaIgraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pauzaToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem izlazToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.Timer timerDrop;
         private User_control.TetrisControl TC;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;

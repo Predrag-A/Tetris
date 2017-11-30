@@ -15,7 +15,7 @@ namespace Tetris.Klase
         bool[,] _matrix;
         int _dim;
         Color _color;
-        Point _mainPoint;
+        Point _location;
 
         #endregion
 
@@ -24,7 +24,7 @@ namespace Tetris.Klase
         public bool[,] Matrix { get { return _matrix; } set { _matrix = value; } }
         public int Dim { get { return _dim; } set { _dim = value; } }
         public Color Color { get { return _color; } set { _color = value; } }
-        public Point MainPoint { get { return _mainPoint; } set { _mainPoint = value; } }
+        public Point Location { get { return _location; } set { _location = value; } }
         
         #endregion
 
@@ -43,7 +43,7 @@ namespace Tetris.Klase
                     Matrix[i,j] = false;
                 }
             }
-            MainPoint = new Point();
+            Location = new Point(0, Grid.Instance.Settings.Columns / 2 - 1);
         }
 
         public Shape(Shape obj)
@@ -58,7 +58,7 @@ namespace Tetris.Klase
                     Matrix[i,j] = obj.Matrix[i,j];
                 }
             }
-            MainPoint = new Point();
+            Location = new Point(0, Grid.Instance.Settings.Columns / 2 - 1);
         }
 
         #endregion
@@ -119,7 +119,7 @@ namespace Tetris.Klase
 
         public void SetLocation(Point loc)
         {
-            _mainPoint = loc;
+            _location = loc;
         }
 
         #endregion
