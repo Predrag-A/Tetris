@@ -15,17 +15,27 @@ namespace Tetris_Novi.User_control
 {
     public partial class TetrisControl : UserControl
     {
+
+        #region Constructors
+
         public TetrisControl()
         {
             InitializeComponent();
         }
-        
+
+        #endregion
+
+        #region Methods
+
         public DialogResult ShowOptions()
         {
             OptionsForm frm = new OptionsForm(Grid.Instance.Settings);
             return frm.ShowDialog();
         }
 
+        #endregion
+
+        #region events
 
         public void paint(PaintEventArgs e)
         {
@@ -58,5 +68,8 @@ namespace Tetris_Novi.User_control
         {
             paint(e);
         }
+
+        #endregion
+
     }
 }

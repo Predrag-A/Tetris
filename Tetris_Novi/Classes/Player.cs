@@ -39,6 +39,7 @@ namespace Tetris_Novi.Classes
         {
             Name = name;
             Score = score;
+            Time = DateTime.Now;
         }
 
         #endregion

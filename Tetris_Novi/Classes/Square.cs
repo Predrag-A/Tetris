@@ -9,13 +9,24 @@ namespace Tetris_Novi.Classes
 {
     public class Square
     {
+
+        #region Attributes
+
         Rectangle _rect;
         bool _filled;
         SolidBrush _brush;
 
+        #endregion
+
+        #region Properties
+
         public Rectangle Rect { get { return _rect; } set { _rect = value; } }
         public bool Filled { get { return _filled; } set { _filled = value; } }
         public SolidBrush Brush { get { return _brush; } set { _brush = value; } }
+
+        #endregion
+
+        #region Constructors
 
         public Square(Point p, Size s, SolidBrush b)
         {
@@ -23,5 +34,8 @@ namespace Tetris_Novi.Classes
             _filled = false;
             _brush = b;
         }
+
+        #endregion
+
     }
 }

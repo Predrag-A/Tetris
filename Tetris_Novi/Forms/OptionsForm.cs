@@ -13,13 +13,24 @@ namespace Tetris_Novi.Forms
 {
     public partial class OptionsForm : Form
     {
+
+        #region Attributes
+
         Settings _settings;
+
+        #endregion
+
+        #region Constructors
 
         public OptionsForm(Settings s)
         {
             InitializeComponent();
             _settings = s;
         }
+
+        #endregion
+
+        #region Events
 
         private void btnOK_Click(object sender, EventArgs e)
         {
@@ -43,5 +54,8 @@ namespace Tetris_Novi.Forms
             DialogResult = DialogResult.Cancel;
             Close();
         }
+
+        #endregion
+
     }
 }

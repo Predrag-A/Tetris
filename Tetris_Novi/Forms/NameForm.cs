@@ -13,15 +13,29 @@ namespace Tetris_Novi.Forms
     public partial class NameForm : Form
     {
 
+        #region Attributes
+
         string _name;
+
+        #endregion
+
+        #region Properties
 
         public string PlayerName { get { return _name; } set { _name = value; } }
 
+        #endregion
+
+        #region Constructors
+        
         public NameForm()
         {
             InitializeComponent();
             _name = txtName.Text;
         }
+
+        #endregion
+
+        #region Events
 
         private void ok_Click(object sender, EventArgs e)
         {
@@ -35,5 +49,8 @@ namespace Tetris_Novi.Forms
             if (!Char.IsLetter(e.KeyChar) && !Char.IsControl(e.KeyChar) && !Char.IsWhiteSpace(e.KeyChar))
                 e.Handled = true;
         }
+
+        #endregion
+
     }
 }

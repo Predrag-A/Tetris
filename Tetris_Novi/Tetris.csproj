@@ -47,6 +47,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Classes\ListaFigura.cs" />
     <Compile Include="Classes\Player.cs" />
     <Compile Include="Classes\PlayerList.cs" />
     <Compile Include="Classes\Settings.cs" />
@@ -75,7 +76,6 @@
     <Compile Include="Classes\Shapes\BigSquare.cs" />
     <Compile Include="Classes\Shapes\SmallSquare.cs" />
     <Compile Include="Classes\Shapes\Cross.cs" />
-    <Compile Include="Classes\ListaFigura.cs" />
     <Compile Include="Classes\Shapes\Triangle.cs" />
     <Compile Include="Forms\OptionsForm.cs">
       <SubType>Form</SubType>
@@ -91,6 +91,9 @@
     <Compile Include="Controls\TetrisControl.Designer.cs">
       <DependentUpon>TetrisControl.cs</DependentUpon>
     </Compile>
+    <EmbeddedResource Include="Forms\Leaderboard.resx">
+      <DependentUpon>Leaderboard.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Forms\NameForm.resx">
       <DependentUpon>NameForm.cs</DependentUpon>
     </EmbeddedResource>

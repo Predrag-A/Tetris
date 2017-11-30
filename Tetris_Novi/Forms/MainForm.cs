@@ -19,21 +19,35 @@ namespace Tetris_Novi
 
     public partial class MainForm : Form
     {
+
+        #region Attributes
+
         Shape _trenutnaFigura;
         Shape _sledecaFigura;
         int _score;
         int _vrm;
         int _level;
+        string _playerName;
         bool _pause = false;
+        PlayerList _list;
 
+        #endregion
+
+        #region Constructors
+        
         public MainForm()
         {
             InitializeComponent();
             ListaFigura.Instance.dodajOblike(3);
             postavi();
             lblPause.Visible = false;
-            PlayerList.Instance.Deserialize("Leaderboard.xml");
-        }        
+            _list = new PlayerList();
+            _list.Deserialize("Leaderboard.xml");
+        }
+
+        #endregion
+
+        #region Methods
 
         public void postavi()
         {
@@ -105,8 +119,8 @@ namespace Tetris_Novi
             }
             else
             {
-                PlayerList.Instance.Add(new Player());
-                PlayerList.Instance.Serialize("Leaderboard.xml");
+                _list.Add(new Player(_playerName, _score));
+                _list.Serialize("Leaderboard.xml");                
                 
                 DialogResult s = MessageBox.Show("Kraj igre. Da li zelite novu partiju?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
                 if (s == DialogResult.Yes)
@@ -118,92 +132,6 @@ namespace Tetris_Novi
                     Grid.Instance.Initialize();
                 }
             }
-        }       
-
-        private void novaIgraToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            NameForm frm = new NameForm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                preview.Visible = true;
-                postavi();
-                _pause = false;
-                _vrm = 0;
-                staviSledecuFiguru();
-                timerGame.Start();
-                timerDrop.Start();
-                Grid.Instance.AddShape(_trenutnaFigura);
-                this.Refresh();
-            }
-        }
-
-        //funkcija koja nam dozvoljava da koristimo strelice nasao na steckoverflow
-        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
-        {
-            //ako nije ukljucen tajmer to znaci da je igrica na puzi
-            if (timerDrop.Enabled)
-            {
-                if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
-                {
-                    //ovo je slicno kao pomeranje na dole
-                    int move;
-                    if (keyData == Grid.Instance.Settings.LeftKey)
-                    {
-                        move = -1;
-                    }
-                    else
-                        move = 1;
-                    Grid.Instance.DeleteShape(_trenutnaFigura); //obrisemo ga
-                    _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y + move));
-                    if (Grid.Instance.IsTaken(_trenutnaFigura))
-                    {
-                        _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y - move));
-                        Grid.Instance.AddShape(_trenutnaFigura);
-                    }
-                    else
-                    {
-                        Grid.Instance.AddShape(_trenutnaFigura);
-                        this.Refresh();
-                    }
-                    return true;
-                }
-                if (keyData == Grid.Instance.Settings.RotateKey)
-                {
-                    Grid.Instance.DeleteShape(_trenutnaFigura);
-                    _trenutnaFigura.RotacijaLevo();
-                    if (Grid.Instance.IsTaken(_trenutnaFigura))
-                    {
-                        _trenutnaFigura.RotacijaDesno();
-                        Grid.Instance.AddShape(_trenutnaFigura);
-                    }
-                    else
-                    {
-                        Grid.Instance.AddShape(_trenutnaFigura);
-                        this.Refresh();
-                    }
-                    return true;
-                }
-                if (keyData == Grid.Instance.Settings.DownKey)
-                {
-                    moveDown();
-                    return true;
-                }
-                if (keyData == Keys.D)
-                {
-                    randomSledeca();
-                    this.Refresh();
-                    return true;
-                }
-                if (keyData == Keys.P)
-                {
-                    pauzaToolStripMenuItem.PerformClick();
-                }
-                if (keyData == Keys.N)
-                {
-                    promeniTrenutnu();
-                }
-            }
-            return base.ProcessCmdKey(ref msg, keyData);
         }
 
         public void promeniTrenutnu()
@@ -215,45 +143,6 @@ namespace Tetris_Novi
             Grid.Instance.AddShape(_trenutnaFigura);
         }
 
-        private void pauzaToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            if (!_pause)
-            {
-                timerGame.Stop();
-                timerDrop.Stop();
-                _pause = true;
-                lblPause.Visible = true;
-                pauzaToolStripMenuItem.Text = "Nastavi";
-                this.Refresh();
-            }
-            else
-            {
-                timerGame.Start();
-                timerDrop.Start();
-                _pause = false;
-                lblPause.Visible = false;
-                this.Refresh();
-            }
-        }
-
-        private void pictureBox1_Paint(object sender, PaintEventArgs e)
-        {
-            Rectangle zaSledeca;
-            for (int i = 0; i < _sledecaFigura.N; i++)
-            {
-                for (int j = 0; j < _sledecaFigura.N; j++)
-                {
-                    Color chosen = Color.Transparent;
-                    if (_sledecaFigura.Matrica[i][j])
-                    {
-                        chosen = _sledecaFigura.Boja;
-                    }
-                    zaSledeca = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
-                        new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
-                    e.Graphics.FillRectangle(new SolidBrush(chosen), zaSledeca);
-                }
-            }
-        }
 
         //The level is set depending on the score
         public void SetLevel()
@@ -357,6 +246,139 @@ namespace Tetris_Novi
                     break;
             }
         }
+
+        #endregion
+
+        #region Events
+
+        private void novaIgraToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            NameForm frm = new NameForm();
+            if (frm.ShowDialog() == DialogResult.OK)
+            {
+                _playerName = frm.PlayerName;
+                preview.Visible = true;
+                postavi();
+                _pause = false;
+                _vrm = 0;
+                staviSledecuFiguru();
+                timerGame.Start();
+                timerDrop.Start();
+                Grid.Instance.AddShape(_trenutnaFigura);
+                this.Refresh();
+            }
+        }
+
+        //funkcija koja nam dozvoljava da koristimo strelice nasao na steckoverflow
+        protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+        {
+            //ako nije ukljucen tajmer to znaci da je igrica na puzi
+            if (timerDrop.Enabled)
+            {
+                if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
+                {
+                    //ovo je slicno kao pomeranje na dole
+                    int move;
+                    if (keyData == Grid.Instance.Settings.LeftKey)
+                    {
+                        move = -1;
+                    }
+                    else
+                        move = 1;
+                    Grid.Instance.DeleteShape(_trenutnaFigura); //obrisemo ga
+                    _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y + move));
+                    if (Grid.Instance.IsTaken(_trenutnaFigura))
+                    {
+                        _trenutnaFigura.PodesiLokaciju(new Point(_trenutnaFigura.GlavnaKoordinata.X, _trenutnaFigura.GlavnaKoordinata.Y - move));
+                        Grid.Instance.AddShape(_trenutnaFigura);
+                    }
+                    else
+                    {
+                        Grid.Instance.AddShape(_trenutnaFigura);
+                        this.Refresh();
+                    }
+                    return true;
+                }
+                if (keyData == Grid.Instance.Settings.RotateKey)
+                {
+                    Grid.Instance.DeleteShape(_trenutnaFigura);
+                    _trenutnaFigura.RotacijaLevo();
+                    if (Grid.Instance.IsTaken(_trenutnaFigura))
+                    {
+                        _trenutnaFigura.RotacijaDesno();
+                        Grid.Instance.AddShape(_trenutnaFigura);
+                    }
+                    else
+                    {
+                        Grid.Instance.AddShape(_trenutnaFigura);
+                        this.Refresh();
+                    }
+                    return true;
+                }
+                if (keyData == Grid.Instance.Settings.DownKey)
+                {
+                    moveDown();
+                    return true;
+                }
+                if (keyData == Keys.D)
+                {
+                    randomSledeca();
+                    this.Refresh();
+                    return true;
+                }
+                if (keyData == Keys.P)
+                {
+                    pauzaToolStripMenuItem.PerformClick();
+                }
+                if (keyData == Keys.N)
+                {
+                    promeniTrenutnu();
+                }
+            }
+            return base.ProcessCmdKey(ref msg, keyData);
+        }
+        
+
+        private void pauzaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (!_pause)
+            {
+                timerGame.Stop();
+                timerDrop.Stop();
+                _pause = true;
+                lblPause.Visible = true;
+                pauzaToolStripMenuItem.Text = "Nastavi";
+                this.Refresh();
+            }
+            else
+            {
+                timerGame.Start();
+                timerDrop.Start();
+                _pause = false;
+                lblPause.Visible = false;
+                this.Refresh();
+            }
+        }
+
+        private void pictureBox1_Paint(object sender, PaintEventArgs e)
+        {
+            Rectangle zaSledeca;
+            for (int i = 0; i < _sledecaFigura.N; i++)
+            {
+                for (int j = 0; j < _sledecaFigura.N; j++)
+                {
+                    Color chosen = Color.Transparent;
+                    if (_sledecaFigura.Matrica[i][j])
+                    {
+                        chosen = _sledecaFigura.Boja;
+                    }
+                    zaSledeca = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
+                        new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
+                    e.Graphics.FillRectangle(new SolidBrush(chosen), zaSledeca);
+                }
+            }
+        }
+        
     
         private void timer1_Tick(object sender, EventArgs e)
         {
@@ -383,8 +405,8 @@ namespace Tetris_Novi
 
         private void najboljiRezultatiToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            var frm = new Leaderboard();
-            DialogResult x = frm.ShowDialog();
+            var frm = new LeaderboardForm(_list);
+            frm.ShowDialog();
         }
 
         private void settingsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -408,5 +430,8 @@ namespace Tetris_Novi
             _vrm++;
             lblTime.Text = "Time: " + _vrm.ToString();
         }
+
+        #endregion
+
     }
 }

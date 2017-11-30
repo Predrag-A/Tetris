@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Serialization;
 
 namespace Tetris_Novi.Classes
 {
@@ -10,7 +11,7 @@ namespace Tetris_Novi.Classes
     public class PlayerList
     {
 
-        #region Fields
+        #region Attributes
 
         List<Player> list;
 
@@ -18,13 +19,14 @@ namespace Tetris_Novi.Classes
 
         #region Properties
 
+        [XmlArrayItem("List",typeof(Player))]
         public List<Player> List { get { return list; } set { list = value; } }
 
         #endregion
 
         #region Constructors
 
-        private PlayerList()
+        public PlayerList()
         {
             list = new List<Player>();
         }
@@ -36,7 +38,6 @@ namespace Tetris_Novi.Classes
         public void Add(Player p)
         {
             List.Add(p);
-            List.Sort();
         }
 
         public void Serialize(string fileName)
@@ -49,28 +50,7 @@ namespace Tetris_Novi.Classes
             XMLSerialization.Serialization.DeSerialize(this, fileName);
         }
 
-        #endregion
-
-        #region Singleton
-
-        private static PlayerList _instance;
-
-        public static PlayerList Instance
-        {
-            get
-            {
-                if (_instance == null)
-                    _instance = new PlayerList();
-                return _instance;
-            }
-
-            set
-            {
-                _instance = value;
-            }
-        }
-
-        #endregion
+        #endregion        
 
     }
 }
