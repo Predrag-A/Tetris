@@ -46,6 +46,30 @@ namespace Tetris.Classes
             Default();
         }
 
+        public Settings(Settings s)
+        {
+            crossColor = s.crossColor;
+            lineColor = s.lineColor;
+            squareColor = s.squareColor;
+            triangleColor = s.triangleColor;
+            smallSquareColor = s.smallSquareColor;
+
+            tetrisBorder = s.tetrisBorder;
+            tetrisBackground = s.tetrisBackground;
+
+            leftKey = s.leftKey;
+            rightKey = s.rightKey;
+            downKey = s.downKey;
+            rotateKey = s.rotateKey;
+            pauseKey = s.pauseKey;
+
+            squareWidth = s.squareWidth;
+            columns = s.columns;
+            rows = s.rows;
+
+            startLevel = s.startLevel;
+        }
+
 
         #endregion        
 

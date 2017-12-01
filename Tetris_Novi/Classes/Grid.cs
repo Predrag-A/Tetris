@@ -83,12 +83,10 @@ namespace Tetris.Klase
         //Checks if the location of the shape is already taken
         public bool IsTaken(Shape obj)
         {
-            int icoordinata = obj.Location.X;
-            int jcoordinata = obj.Location.Y;
-            int proveri1 = obj.Dim - 1 + icoordinata;
-            int proveri2 = obj.Dim - 1 + jcoordinata;
-            int provera3 = jcoordinata;
-            bool provera = false;
+            int check1 = obj.Dim - 1 + obj.Location.X;
+            int check2 = obj.Dim - 1 + obj.Location.Y;
+            int check3 = obj.Location.Y;
+            bool status = false;
 
             for(int j=obj.Dim-1;j>=0;j--)
             {
@@ -96,46 +94,46 @@ namespace Tetris.Klase
                 {
                     if (obj.Matrix[i,j])
                     {
-                        provera = true;
+                        status = true;
                     }
                 }
-                if (provera)
+                if (status)
                     break;
-                proveri2--;
+                check2--;
             }
 
-            provera = false;
+            status = false;
             for(int j=obj.Dim-1;j>=0;j--)
             {
                 for(int i=0;i<obj.Dim;i++)
                 {
                     if(obj.Matrix[j,i])
                     {
-                        provera = true;
+                        status = true;
                     }
                 }
-                if (provera)
+                if (status)
                     break;
-                proveri1--;
+                check1--;
             }
 
 
-            provera = false;
+            status = false;
             for(int j=0;j<obj.Dim;j++)
             {
                 for(int i=0;i<obj.Dim;i++)
                 {
                     if(obj.Matrix[i,j])
                     {
-                        provera = true;
+                        status = true;
                     }
                 }
-                if (provera)
+                if (status)
                     break;
-                provera3++;
+                check3++;
             }
 
-            if (proveri1 >= Settings.Rows || proveri2 >= Settings.Columns || provera3 < 0)
+            if (check1 >= Settings.Rows || check2 >= Settings.Columns || check3 < 0)
                 return true;
             for(int i=0;i<obj.Dim;i++)
             {
@@ -143,7 +141,7 @@ namespace Tetris.Klase
                 {
                     if(obj.Matrix[i,j])
                     {
-                        if (Matrix[i+icoordinata,j+jcoordinata].Filled)
+                        if (Matrix[i+obj.Location.X,j+obj.Location.Y].Filled)
                             return true;
                     }
                 }

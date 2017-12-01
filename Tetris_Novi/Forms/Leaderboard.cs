@@ -25,7 +25,6 @@ namespace Tetris.Forms
         public LeaderboardForm(PlayerList l)
         {
             list = l;
-            list.List.Sort();            
             InitializeComponent();
         }
 
@@ -62,6 +61,7 @@ namespace Tetris.Forms
 
         private void button2_Click(object sender, EventArgs e)
         {
+            DialogResult = DialogResult.OK;
             this.Close();
         }
 

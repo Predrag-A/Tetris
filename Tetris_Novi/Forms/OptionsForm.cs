@@ -17,6 +17,7 @@ namespace Tetris.Forms
         #region Attributes
 
         Settings _settings;
+        bool _changed;
 
         #endregion
 
@@ -26,6 +27,7 @@ namespace Tetris.Forms
         {
             InitializeComponent();
             _settings = s;
+            _changed = false;
         }
 
         #endregion
@@ -34,7 +36,6 @@ namespace Tetris.Forms
 
         private void btnOK_Click(object sender, EventArgs e)
         {
-            DialogResult = DialogResult.OK;
             Close();
         }
 
@@ -47,12 +48,20 @@ namespace Tetris.Forms
         private void OptionsForm_Load(object sender, EventArgs e)
         {
             propertyGrid.SelectedObject = _settings;
-        }
+        }        
 
-        private void btnCancel_Click(object sender, EventArgs e)
+        private void propertyGrid_PropertyValueChanged(object s, PropertyValueChangedEventArgs e)
         {
-            DialogResult = DialogResult.Cancel;
-            Close();
+            if (!_changed)
+                _changed = true;
+        }        
+
+        private void OptionsForm_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (_changed)
+                DialogResult = DialogResult.OK;
+            else
+                DialogResult = DialogResult.Cancel;
         }
 
         #endregion

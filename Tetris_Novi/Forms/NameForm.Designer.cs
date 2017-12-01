@@ -67,7 +67,9 @@
             this.Controls.Add(this.ok);
             this.Controls.Add(this.txtName);
             this.Controls.Add(this.label2);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "NameForm";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterParent;
             this.Text = "Player Name";
             this.ResumeLayout(false);
             this.PerformLayout();

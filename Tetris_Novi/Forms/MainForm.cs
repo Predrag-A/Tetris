@@ -15,7 +15,7 @@ using Tetris.User_control;
 namespace Tetris
 {
 
-    //TODO Resize problem, IsTaken function
+    //TODO Resize problem
 
     public partial class MainForm : Form
     {
