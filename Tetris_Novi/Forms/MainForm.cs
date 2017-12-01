@@ -13,9 +13,7 @@ using Tetris.Klase;
 using Tetris.User_control;
 
 namespace Tetris
-{
-
-    //TODO Resize problem
+{  
 
     public partial class MainForm : Form
     {
@@ -50,6 +48,14 @@ namespace Tetris
 
         #region Methods
 
+        //Resizes form
+        public void ResizeForm()
+        {
+            this.Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size + 250;
+            this.Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size+64;
+            TC.ResizeGrid();
+        }
+
         //Initializes the starting values of a game
         public void Initialize()
         {
@@ -59,6 +65,7 @@ namespace Tetris
             _time = 0;
             _level = Grid.Instance.Settings.StartLevel;
             lblScore.Text = "Score:" + _score.ToString();
+            ResizeForm();
         }
 
         //Sets the current shape as the one in the preview and gets a new one for the preview
@@ -312,7 +319,7 @@ namespace Tetris
                 }
                 //if (keyData == Keys.N)
                 //{
-                //    promeniTrenutnu();
+                //    SetCurrent();
                 //}
             }
             return base.ProcessCmdKey(ref msg, keyData);
@@ -432,12 +439,13 @@ namespace Tetris
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 Grid.Instance.Initialize();
-                TC.Refresh();
+                this.ResizeForm();
                 lblScore.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblTime.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblLevel.ForeColor = Grid.Instance.Settings.TetrisBorder;
-                lblNext.ForeColor = Grid.Instance.Settings.TetrisBorder;
+                lblNext.ForeColor = Grid.Instance.Settings.TetrisBorder;                
             }
+            TC.Refresh();
         }
         
         private void endGameToolStripMenuItem_Click(object sender, EventArgs e)

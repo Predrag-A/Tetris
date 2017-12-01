@@ -35,9 +35,10 @@
             // pbTetris
             // 
             this.pbTetris.BackColor = System.Drawing.Color.Transparent;
-            this.pbTetris.Location = new System.Drawing.Point(3, 3);
+            this.pbTetris.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.pbTetris.Location = new System.Drawing.Point(0, 0);
             this.pbTetris.Name = "pbTetris";
-            this.pbTetris.Size = new System.Drawing.Size(365, 602);
+            this.pbTetris.Size = new System.Drawing.Size(371, 608);
             this.pbTetris.TabIndex = 0;
             this.pbTetris.TabStop = false;
             this.pbTetris.Paint += new System.Windows.Forms.PaintEventHandler(this.pbTetris_Paint_1);

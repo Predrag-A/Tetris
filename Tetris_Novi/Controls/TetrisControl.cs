@@ -27,7 +27,14 @@ namespace Tetris.User_control
 
         #region Methods
 
-        public void paint(PaintEventArgs e)
+        public void ResizeGrid()
+        {
+            this.Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size;
+            this.Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size;
+            this.Refresh();
+        }
+
+        void paint(PaintEventArgs e)
         {
             for (int i = 0; i < Grid.Instance.Settings.Rows; i++)
             {

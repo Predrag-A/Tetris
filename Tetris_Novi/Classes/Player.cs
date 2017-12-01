@@ -84,8 +84,8 @@ namespace Tetris.Classes
                 return -1;
             Player p = x as Player;
             if (this.score >= p.Score)
-                return 1;
-            return -1;
+                return -1;
+            return 1;
         }
 
         #endregion        

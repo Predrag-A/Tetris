@@ -42,6 +42,7 @@ namespace Tetris.Forms
         private void Default_Click(object sender, EventArgs e)
         {
             _settings.Default();
+            _changed = true;
             propertyGrid.Refresh();
         }
 
