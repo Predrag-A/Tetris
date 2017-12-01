@@ -259,7 +259,7 @@ namespace Tetris
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //Does not work if the game is not running
-            if (_gameRunning)
+            if (_gameRunning && !_pause)
             {                
                 if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
                 {                    
