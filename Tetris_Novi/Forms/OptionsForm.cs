@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris.Classes;
 
@@ -14,7 +7,7 @@ namespace Tetris.Forms
     public partial class OptionsForm : Form
     {
 
-        #region Attributes
+        #region Fields
 
         Settings _settings;
         bool _changed;
@@ -59,10 +52,7 @@ namespace Tetris.Forms
 
         private void OptionsForm_FormClosing(object sender, FormClosingEventArgs e)
         {
-            if (_changed)
-                DialogResult = DialogResult.OK;
-            else
-                DialogResult = DialogResult.Cancel;
+            DialogResult = _changed ? DialogResult.OK : DialogResult.Cancel;
         }
 
         #endregion

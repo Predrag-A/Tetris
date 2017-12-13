@@ -1,16 +1,9 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris.Classes;
 using Tetris.Forms;
 using Tetris.Klase;
-using Tetris.User_control;
 
 namespace Tetris
 {  
@@ -18,7 +11,7 @@ namespace Tetris
     public partial class MainForm : Form
     {
 
-        #region Attributes
+        #region Fields
 
         Shape _currentShape;
         Shape _nextShape;
@@ -26,7 +19,7 @@ namespace Tetris
         int _time;
         int _level;
         string _playerName;
-        bool _pause = false;
+        bool _pause;
         bool _gameRunning;
         PlayerList _list;
 
@@ -51,8 +44,8 @@ namespace Tetris
         //Resizes form
         public void ResizeForm()
         {
-            this.Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size + 250;
-            this.Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size+64;
+            Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size + 250;
+            Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size+64;
             TC.ResizeGrid();
         }
 
@@ -64,7 +57,7 @@ namespace Tetris
             _score = 0;
             _time = 0;
             _level = Grid.Instance.Settings.StartLevel;
-            lblScore.Text = "Score:" + _score.ToString();
+            lblScore.Text = "Score:" + _score;
             ResizeForm();
         }
 
@@ -87,7 +80,7 @@ namespace Tetris
                 _currentShape.SetLocation(new Point(_currentShape.Location.X - 1, _currentShape.Location.Y));                
                 Grid.Instance.AddShape(_currentShape);
                 _score += ((int)Math.Pow(Grid.Instance.DeleteRows(), 2) * 100);
-                lblScore.Text = "Score: " + _score.ToString();
+                lblScore.Text = "Score: " + _score;
                 //Set the next shape as current. If the position is taken after setting the next shape, the game is over
                 SetCurrent();
                 if (Grid.Instance.IsTaken(_currentShape))
@@ -104,7 +97,7 @@ namespace Tetris
                 Grid.Instance.AddShape(_currentShape);
 
             }
-            this.Refresh();
+            Refresh();
         }
 
         //Method that gets called after game ends
@@ -119,7 +112,7 @@ namespace Tetris
                 _list.Add(new Player(_playerName, _score));
                 _list.Serialize("Leaderboard.xml");
             }
-            DialogResult s = MessageBox.Show("Game over. Do you want to start another game?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
+            var s = MessageBox.Show("Game over. Do you want to start another game?", "Game Over", MessageBoxButtons.YesNo, MessageBoxIcon.Question);
             Grid.Instance.Initialize();
             if (s == DialogResult.Yes)
             {
@@ -131,7 +124,7 @@ namespace Tetris
         //Returns a random shape
         public Shape GetShape()
         {
-            Random rand = new Random();
+            var rand = new Random();
             switch (rand.Next(0, 5))
             {
                 case 1:
@@ -151,7 +144,7 @@ namespace Tetris
         //The level is set depending on the score
         public void SetLevel()
         {
-            lblLevel.Text = "LEVEL: " + _level.ToString();
+            lblLevel.Text = "LEVEL: " + _level;
 
             switch (_level)
             {
@@ -259,86 +252,73 @@ namespace Tetris
         protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
         {
             //Does not work if the game is not running
-            if (_gameRunning && !_pause)
-            {                
-                if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
-                {                    
-                    int move;
-                    if (keyData == Grid.Instance.Settings.LeftKey)
-                    {
-                        move = -1;
-                    }
-                    else
-                        move = 1;
-                    Grid.Instance.DeleteShape(_currentShape);
-                    _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y + move));
-                    if (Grid.Instance.IsTaken(_currentShape))
-                    {
-                        _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y - move));
-                        Grid.Instance.AddShape(_currentShape);
-                    }
-                    else
-                    {
-                        Grid.Instance.AddShape(_currentShape);
-                        this.Refresh();
-                    }
-                    return true;
-                }
-                if (keyData == Grid.Instance.Settings.RotateKey)
+            if (!_gameRunning || _pause) return base.ProcessCmdKey(ref msg, keyData);
+            if (keyData == Grid.Instance.Settings.LeftKey || keyData == Grid.Instance.Settings.RightKey)
+            {                    
+                int move;
+                if (keyData == Grid.Instance.Settings.LeftKey)
                 {
-                    //Rotates the shape right. If the new location is free, set it as the new location.
-                    //If it is not free, rotate back to original position.
-                    Grid.Instance.DeleteShape(_currentShape);
-                    _currentShape.RotateR();
-                    if (Grid.Instance.IsTaken(_currentShape))
-                    {
-                        _currentShape.RotateL();
-                        Grid.Instance.AddShape(_currentShape);
-                    }
-                    else
-                    {
-                        Grid.Instance.AddShape(_currentShape);
-                        this.Refresh();
-                    }
-                    return true;
+                    move = -1;
                 }
-                if (keyData == Grid.Instance.Settings.DownKey)
+                else
+                    move = 1;
+                Grid.Instance.DeleteShape(_currentShape);
+                _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y + move));
+                if (Grid.Instance.IsTaken(_currentShape))
                 {
-                    MoveDown();
-                    return true;
+                    _currentShape.SetLocation(new Point(_currentShape.Location.X, _currentShape.Location.Y - move));
+                    Grid.Instance.AddShape(_currentShape);
                 }
-                //if (keyData == Keys.D)
-                //{
-                //    _nextShape() = GetShape();
-                //    this.Refresh();
-                //    return true;
-                //}
-                if (keyData == Grid.Instance.Settings.PauseKey)
+                else
                 {
-                    pauseToolStripMenuItem.PerformClick();
+                    Grid.Instance.AddShape(_currentShape);
+                    Refresh();
                 }
-                //if (keyData == Keys.N)
-                //{
-                //    SetCurrent();
-                //}
+                return true;
+            }
+            if (keyData == Grid.Instance.Settings.RotateKey)
+            {
+                //Rotates the shape right. If the new location is free, set it as the new location.
+                //If it is not free, rotate back to original position.
+                Grid.Instance.DeleteShape(_currentShape);
+                _currentShape.RotateR();
+                if (Grid.Instance.IsTaken(_currentShape))
+                {
+                    _currentShape.RotateL();
+                    Grid.Instance.AddShape(_currentShape);
+                }
+                else
+                {
+                    Grid.Instance.AddShape(_currentShape);
+                    Refresh();
+                }
+                return true;
+            }
+            if (keyData == Grid.Instance.Settings.DownKey)
+            {
+                MoveDown();
+                return true;
+            }
+            if (keyData == Grid.Instance.Settings.PauseKey)
+            {
+                pauseToolStripMenuItem.PerformClick();
             }
             return base.ProcessCmdKey(ref msg, keyData);
         }        
 
-        //Event that paints the preivew shape
+        //Event that paints the preview shape
         private void pictureBox1_Paint(object sender, PaintEventArgs e)
         {
-            Rectangle next;
-            for (int i = 0; i < _nextShape.Dim; i++)
+            for (var i = 0; i < _nextShape.Dim; i++)
             {
-                for (int j = 0; j < _nextShape.Dim; j++)
+                for (var j = 0; j < _nextShape.Dim; j++)
                 {
-                    Color chosen = Color.Transparent;
+                    var chosen = Color.Transparent;
                     if (_nextShape.Matrix[i,j])
                     {
                         chosen = _nextShape.Color;
                     }
-                    next = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
+                    var next = new Rectangle(new Point(30 + j * Grid.Instance.Settings.Size, 30 + i * Grid.Instance.Settings.Size),
                         new Size(Grid.Instance.Settings.Size, Grid.Instance.Settings.Size));
                     e.Graphics.FillRectangle(new SolidBrush(chosen), next);
                 }
@@ -357,7 +337,7 @@ namespace Tetris
         private void timerGame_Tick(object sender, EventArgs e)
         {
             _time++;
-            lblTime.Text = "Time: " + _time.ToString();
+            lblTime.Text = "Time: " + _time;
         }
 
         #endregion
@@ -369,19 +349,17 @@ namespace Tetris
         {
             if (_gameRunning)
                 return;
-            NameForm frm = new NameForm();
-            if (frm.ShowDialog() == DialogResult.OK)
-            {
-                _gameRunning = true;
-                _playerName = frm.PlayerName;
-                preview.Visible = true;
-                Initialize();
-                SetCurrent();
-                timerGame.Start();
-                timerDrop.Start();
-                Grid.Instance.AddShape(_currentShape);
-                this.Refresh();
-            }
+            var frm = new NameForm();
+            if (frm.ShowDialog() != DialogResult.OK) return;
+            _gameRunning = true;
+            _playerName = frm.PlayerName;
+            preview.Visible = true;
+            Initialize();
+            SetCurrent();
+            timerGame.Start();
+            timerDrop.Start();
+            Grid.Instance.AddShape(_currentShape);
+            Refresh();
         }
 
         //Pauses the game
@@ -396,7 +374,7 @@ namespace Tetris
                 _pause = true;
                 lblPause.Visible = true;
                 pauseToolStripMenuItem.Text = "Continue";
-                this.Refresh();
+                Refresh();
             }
             else
             {
@@ -404,7 +382,7 @@ namespace Tetris
                 timerDrop.Start();
                 _pause = false;
                 lblPause.Visible = false;
-                this.Refresh();
+                Refresh();
             }
         }
 
@@ -414,7 +392,7 @@ namespace Tetris
             timerDrop.Stop();          
             if (MessageBox.Show("Are you sure you want to quit the game?", "Exit", MessageBoxButtons.YesNo, MessageBoxIcon.Information) == DialogResult.Yes)
             {
-                this.Close();
+                Close();
             }
             else
             {
@@ -434,12 +412,12 @@ namespace Tetris
             if (_gameRunning)
                 return;
             
-            OptionsForm frm = new OptionsForm(Grid.Instance.Settings);
+            var frm = new OptionsForm(Grid.Instance.Settings);
 
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 Grid.Instance.Initialize();
-                this.ResizeForm();
+                ResizeForm();
                 lblScore.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblTime.ForeColor = Grid.Instance.Settings.TetrisBorder;
                 lblLevel.ForeColor = Grid.Instance.Settings.TetrisBorder;

@@ -1,11 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 using Tetris.Classes;
 
@@ -14,9 +8,9 @@ namespace Tetris.Forms
     public partial class LeaderboardForm : Form
     {
 
-        #region Attributes
+        #region Fields
 
-        PlayerList list;
+        PlayerList _list;
 
         #endregion
 
@@ -24,7 +18,7 @@ namespace Tetris.Forms
 
         public LeaderboardForm(PlayerList l)
         {
-            list = l;
+            _list = l;
             InitializeComponent();
         }
 
@@ -34,7 +28,7 @@ namespace Tetris.Forms
 
         void LoadData()
         {
-            data.DataSource = list.List.ToList();
+            data.DataSource = _list.List.ToList();
             data.Columns[2].HeaderText = "Date";
             data.Columns[2].DefaultCellStyle.Format = "dd/MM/yyyy";
         }
@@ -50,19 +44,17 @@ namespace Tetris.Forms
 
         private void button1_Click(object sender, EventArgs e)
         {
-            if (MessageBox.Show("Are you sure you want to clear the leaderboard?", "Confirm", 
-                MessageBoxButtons.YesNo) == DialogResult.Yes)
-            {
-                list.List.Clear();
-                list.Serialize("Leaderboard.xml");
-                this.Close();
-            }
+            if (MessageBox.Show("Are you sure you want to clear the leaderboard?", "Confirm",
+                    MessageBoxButtons.YesNo) != DialogResult.Yes) return;
+            _list.List.Clear();
+            _list.Serialize("Leaderboard.xml");
+            Close();
         }        
 
         private void button2_Click(object sender, EventArgs e)
         {
             DialogResult = DialogResult.OK;
-            this.Close();
+            Close();
         }
 
         #endregion

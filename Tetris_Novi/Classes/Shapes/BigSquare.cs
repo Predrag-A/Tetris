@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetris.Klase
+﻿namespace Tetris.Klase
 {
     public class BigSquare:Shape
     {
@@ -13,9 +7,9 @@ namespace Tetris.Klase
 
         public BigSquare(int n):base(n,Grid.Instance.Settings.BigSquareColor)
         {
-            for(int i=0;i<Dim;i++)
+            for(var i=0;i<Dim;i++)
             {
-                for(int j=0;j<Dim;j++)
+                for(var j=0;j<Dim;j++)
                 {
                     Matrix[i,j] = true;
                 }

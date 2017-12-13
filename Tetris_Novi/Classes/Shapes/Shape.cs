@@ -1,31 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 
 namespace Tetris.Klase
 {
     public class Shape
     {
 
-        #region Attributes
-
-        bool[,] _matrix;
-        int _dim;
-        Color _color;
-        Point _location;
-
-        #endregion
-
         #region Properties
 
-        public bool[,] Matrix { get { return _matrix; } set { _matrix = value; } }
-        public int Dim { get { return _dim; } set { _dim = value; } }
-        public Color Color { get { return _color; } set { _color = value; } }
-        public Point Location { get { return _location; } set { _location = value; } }
-        
+        public bool[,] Matrix { get; set; }
+
+        public int Dim { get; set; }
+
+        public Color Color { get; set; }
+
+        public Point Location { get; set; }
+
         #endregion
 
         #region Constructors
@@ -36,9 +25,9 @@ namespace Tetris.Klase
             Dim = n;
 
             Matrix = new bool[Dim, Dim];
-            for(int i=0;i<Dim;i++)
+            for(var i=0;i<Dim;i++)
             {
-                for(int j=0;j<Dim;j++)
+                for(var j=0;j<Dim;j++)
                 {
                     Matrix[i,j] = false;
                 }
@@ -51,9 +40,9 @@ namespace Tetris.Klase
             Color = obj.Color;
             Dim = obj.Dim;
             Matrix = new bool[Dim,Dim];
-            for(int i=0;i<Dim;i++)
+            for(var i=0;i<Dim;i++)
             {
-                for(int j=0;j<Dim;j++)
+                for(var j=0;j<Dim;j++)
                 {
                     Matrix[i,j] = obj.Matrix[i,j];
                 }
@@ -77,19 +66,19 @@ namespace Tetris.Klase
 
         public void RotateR()
         {            
-            bool[,] pom = new bool[Dim,Dim];
+            var pom = new bool[Dim,Dim];
 
-            for(int i=0;i<Dim;i++)
+            for(var i=0;i<Dim;i++)
             {
-                for(int j=0;j<Dim;j++)
+                for(var j=0;j<Dim;j++)
                 {
                     pom[j,Dim - 1 - i] = Matrix[i,j];
                 }
             }
 
-            for(int i=0;i<Dim;i++)
+            for(var i=0;i<Dim;i++)
             {
-                for(int j=0;j<Dim;j++)
+                for(var j=0;j<Dim;j++)
                 {
                     Matrix[i,j] = pom[i,j];
                 }
@@ -98,19 +87,19 @@ namespace Tetris.Klase
 
         public void RotateL()
         {
-            bool[,] pom = new bool[Dim, Dim];
+            var pom = new bool[Dim, Dim];
 
-            for (int i = 0; i < Dim; i++)
+            for (var i = 0; i < Dim; i++)
             {
-                for (int j = 0; j < Dim; j++)
+                for (var j = 0; j < Dim; j++)
                 {
                     pom[i, j] = Matrix[j, Dim - i - 1];
                 }
             }
 
-            for (int i = 0; i < Dim; i++)
+            for (var i = 0; i < Dim; i++)
             {
-                for (int j = 0; j < Dim; j++)
+                for (var j = 0; j < Dim; j++)
                 {
                     Matrix[i, j] = pom[i, j];
                 }
@@ -119,7 +108,7 @@ namespace Tetris.Klase
 
         public void SetLocation(Point loc)
         {
-            _location = loc;
+            Location = loc;
         }
 
         #endregion

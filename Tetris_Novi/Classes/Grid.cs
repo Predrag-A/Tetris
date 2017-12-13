@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Drawing;
+﻿using System.Drawing;
 using Tetris.Classes;
 
 namespace Tetris.Klase
@@ -11,17 +6,15 @@ namespace Tetris.Klase
     public class Grid
     {
 
-        #region Attributes
-
-        Square[,] _matrix;
-        Settings _settings;
+        #region Fields
 
         #endregion
 
         #region Properties
 
-        public Square[,] Matrix { get { return _matrix; } set { _matrix = value; } }
-        internal Settings Settings { get { return _settings; } set { _settings = value; } }
+        public Square[,] Matrix { get; set; }
+
+        internal Settings Settings { get; set; }
 
         #endregion
 
@@ -42,8 +35,8 @@ namespace Tetris.Klase
         {
             Matrix = new Square[Settings.Rows, Settings.Columns];
 
-            for (int i = 0; i < Settings.Rows; i++)            
-                for (int j = 0; j < Settings.Columns; j++)
+            for (var i = 0; i < Settings.Rows; i++)            
+                for (var j = 0; j < Settings.Columns; j++)
                     Matrix[i, j] = new Square(new Point(j * Settings.Size, i * Settings.Size), 
                         new Size(Settings.Size, Settings.Size), new SolidBrush(Settings.TetrisBackground));                           
         }
@@ -51,9 +44,9 @@ namespace Tetris.Klase
         //Adds a new shape and colors in the corresponding squares in the grid
         public void AddShape(Shape obj)
         {
-            for(int i=0;i<obj.Dim;i++)
+            for(var i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.Dim;j++)
+                for(var j=0;j<obj.Dim;j++)
                 {
                     if(obj.Matrix[i,j])
                     {
@@ -67,9 +60,9 @@ namespace Tetris.Klase
         //Removes the shape from the grid
         public void DeleteShape(Shape obj)
         {
-            for(int i=0;i<obj.Dim;i++)
+            for(var i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.Dim;j++)
+                for(var j=0;j<obj.Dim;j++)
                 {
                     if(obj.Matrix[i,j])
                     {
@@ -83,14 +76,14 @@ namespace Tetris.Klase
         //Checks if the location of the shape is already taken
         public bool IsTaken(Shape obj)
         {
-            int check1 = obj.Dim - 1 + obj.Location.X;
-            int check2 = obj.Dim - 1 + obj.Location.Y;
-            int check3 = obj.Location.Y;
-            bool status = false;
+            var check1 = obj.Dim - 1 + obj.Location.X;
+            var check2 = obj.Dim - 1 + obj.Location.Y;
+            var check3 = obj.Location.Y;
+            var status = false;
 
-            for(int j=obj.Dim-1;j>=0;j--)
+            for(var j=obj.Dim-1;j>=0;j--)
             {
-                for(int i=0;i<obj.Dim;i++)
+                for(var i=0;i<obj.Dim;i++)
                 {
                     if (obj.Matrix[i,j])
                     {
@@ -103,9 +96,9 @@ namespace Tetris.Klase
             }
 
             status = false;
-            for(int j=obj.Dim-1;j>=0;j--)
+            for(var j=obj.Dim-1;j>=0;j--)
             {
-                for(int i=0;i<obj.Dim;i++)
+                for(var i=0;i<obj.Dim;i++)
                 {
                     if(obj.Matrix[j,i])
                     {
@@ -119,9 +112,9 @@ namespace Tetris.Klase
 
 
             status = false;
-            for(int j=0;j<obj.Dim;j++)
+            for(var j=0;j<obj.Dim;j++)
             {
-                for(int i=0;i<obj.Dim;i++)
+                for(var i=0;i<obj.Dim;i++)
                 {
                     if(obj.Matrix[i,j])
                     {
@@ -135,9 +128,9 @@ namespace Tetris.Klase
 
             if (check1 >= Settings.Rows || check2 >= Settings.Columns || check3 < 0)
                 return true;
-            for(int i=0;i<obj.Dim;i++)
+            for(var i=0;i<obj.Dim;i++)
             {
-                for(int j=0;j<obj.Dim;j++)
+                for(var j=0;j<obj.Dim;j++)
                 {
                     if(obj.Matrix[i,j])
                     {
@@ -153,28 +146,28 @@ namespace Tetris.Klase
         //If any rows are filled, delete them and return the number of deleted rows
         public int DeleteRows()
         {
-            int count = 0;
-            for(int i=Settings.Rows-1;i>=0;i--)
+            var count = 0;
+            for(var i=Settings.Rows-1;i>=0;i--)
             {                
-                bool deleted = true;
+                var deleted = true;
                 //Checks if the row is filled, if it's not deleted=false
-                for (int j = Settings.Columns - 1; j >= 0; j--)
+                for (var j = Settings.Columns - 1; j >= 0; j--)
                     if (Matrix[i,j].Filled == false)
                         deleted = false;
                 if(deleted)
                 {
                     //If the entire row is filled, move all the rows above the deleted row lower and increase the counter
                     count++;
-                    for(int k=i;k>0;k--)
+                    for(var k=i;k>0;k--)
                     {
-                        for(int l=Settings.Columns-1;l>=0;l--)
+                        for(var l=Settings.Columns-1;l>=0;l--)
                         {
                             Matrix[k,l].Filled = Matrix[k - 1,l].Filled;
                             Matrix[k,l].Brush = Matrix[k - 1,l].Brush;
                         }
                     }
                     //Because all rows have been shifted, fill in the first row as if it were empty
-                    for(int k=Settings.Columns-1;k>=0;k--)
+                    for(var k=Settings.Columns-1;k>=0;k--)
                     {
                         Matrix[0,k].Filled = false;
                         Matrix[0,k].Brush = new SolidBrush(Settings.TetrisBackground);

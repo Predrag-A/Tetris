@@ -1,15 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Drawing;
-using System.Data;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 using Tetris.Klase;
-using Tetris.Classes;
-using Tetris.Forms;
 
 namespace Tetris.User_control
 {
@@ -29,16 +20,16 @@ namespace Tetris.User_control
 
         public void ResizeGrid()
         {
-            this.Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size;
-            this.Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size;
-            this.Refresh();
+            Width = Grid.Instance.Settings.Columns * Grid.Instance.Settings.Size;
+            Height = Grid.Instance.Settings.Rows * Grid.Instance.Settings.Size;
+            Refresh();
         }
 
         void paint(PaintEventArgs e)
         {
-            for (int i = 0; i < Grid.Instance.Settings.Rows; i++)
+            for (var i = 0; i < Grid.Instance.Settings.Rows; i++)
             {
-                for (int j = 0; j < Grid.Instance.Settings.Columns; j++)
+                for (var j = 0; j < Grid.Instance.Settings.Columns; j++)
                 {
                     if (Grid.Instance.Matrix[i, j].Filled)
                         e.Graphics.FillRectangle(Grid.Instance.Matrix[i, j].Brush, Grid.Instance.Matrix[i, j].Rect);

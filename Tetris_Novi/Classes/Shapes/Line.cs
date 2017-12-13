@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetris.Klase
+﻿namespace Tetris.Klase
 {
     public class Line:Shape
     {
@@ -13,7 +7,7 @@ namespace Tetris.Klase
 
         public Line(int n):base(n,Grid.Instance.Settings.LineColor)
         {
-            for (int i = 0; i < n; i++)
+            for (var i = 0; i < n; i++)
                 Matrix[i,n / 2] = true;
         }
 

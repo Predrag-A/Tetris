@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml.Serialization;
 
 namespace Tetris.Classes
@@ -11,22 +7,22 @@ namespace Tetris.Classes
     [Serializable]
     public class Player : IComparable
     {
-        #region Attributes
+        #region Fields
 
-        string name;
-        int score;
-        private DateTime time;
+        string _name;
+        int _score;
+        private DateTime _time;
 
         #endregion
 
         #region Properties
 
-        [XmlElementAttribute("PlayerName")]
-        public string Name { get { return name; } set { name = value; } }
-        [XmlElementAttribute("Score")]
-        public int Score { get { return score; } set { score = value; } }
-        [XmlElementAttribute("Date")]
-        public DateTime Time { get { return time; } set { time = value; } }
+        [XmlElement("PlayerName")]
+        public string Name { get => _name; set => _name = value; }
+        [XmlElement("Score")]
+        public int Score { get => _score; set => _score = value; }
+        [XmlElement("Date")]
+        public DateTime Time { get => _time; set => _time = value; }
 
         #endregion
 
@@ -56,10 +52,8 @@ namespace Tetris.Classes
                 return false;
             if (obj.GetType() != typeof(Player))
                 return false;
-            Player p = obj as Player;
-            if (p.Score == Score && p.Name == Name)
-                return true;
-            return false;
+            var p = obj as Player;
+            return p.Score == Score && p.Name == Name;
         }
 
         public override int GetHashCode()
@@ -69,7 +63,7 @@ namespace Tetris.Classes
 
         public override string ToString()
         {
-            return "Player " + Name + "; Score: " + Score.ToString() + " Date: " + Time.ToShortDateString();
+            return "Player " + Name + "; Score: " + Score + " Date: " + Time.ToShortDateString();
         }
 
 
@@ -82,8 +76,7 @@ namespace Tetris.Classes
         {
             if (x.GetType() != typeof(Player))
                 return -1;
-            Player p = x as Player;
-            if (this.score >= p.Score)
+            if (x is Player p && _score >= p.Score)
                 return -1;
             return 1;
         }

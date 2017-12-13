@@ -1,11 +1,14 @@
-﻿namespace Tetris.Forms
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Tetris.Forms
 {
     partial class NameForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -78,8 +81,8 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label2;
-        internal System.Windows.Forms.TextBox txtName;
-        private System.Windows.Forms.Button ok;
+        private Label label2;
+        internal TextBox txtName;
+        private Button ok;
     }
 }

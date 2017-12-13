@@ -1,9 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Xml;
 using System.Xml.Serialization;
 
@@ -13,16 +10,16 @@ namespace Tetris.Classes
     public class PlayerList
     {
 
-        #region Attributes
+        #region Fields
 
-        List<Player> list;
+        List<Player> _list;
 
         #endregion
 
         #region Properties
 
         [XmlArrayItem("PlayerList",typeof(Player))]
-        public List<Player> List { get { return list; } set { list = value; } }
+        public List<Player> List { get => _list; set => _list = value; }
 
         #endregion
 
@@ -30,7 +27,7 @@ namespace Tetris.Classes
 
         public PlayerList()
         {
-            list = new List<Player>();
+            _list = new List<Player>();
         }
 
         #endregion
@@ -64,7 +61,7 @@ namespace Tetris.Classes
             {
                 p = (PlayerList)serializer.Deserialize(reader);
             }
-            this.List = p.List;
+            List = p.List;
         }
 
         #endregion        

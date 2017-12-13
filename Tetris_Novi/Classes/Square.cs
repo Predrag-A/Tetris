@@ -1,28 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 
 namespace Tetris.Classes
 {
     public class Square
     {
 
-        #region Attributes
-
-        Rectangle _rect;
-        bool _filled;
-        SolidBrush _brush;
-
-        #endregion
-
         #region Properties
 
-        public Rectangle Rect { get { return _rect; } set { _rect = value; } }
-        public bool Filled { get { return _filled; } set { _filled = value; } }
-        public SolidBrush Brush { get { return _brush; } set { _brush = value; } }
+        public Rectangle Rect { get; set; }
+
+        public bool Filled { get; set; }
+
+        public SolidBrush Brush { get; set; }
 
         #endregion
 
@@ -30,9 +19,9 @@ namespace Tetris.Classes
 
         public Square(Point p, Size s, SolidBrush b)
         {
-            _rect = new Rectangle(p, s);
-            _filled = false;
-            _brush = b;
+            Rect = new Rectangle(p, s);
+            Filled = false;
+            Brush = b;
         }
 
         #endregion

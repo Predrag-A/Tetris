@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Tetris.Forms
@@ -13,15 +6,13 @@ namespace Tetris.Forms
     public partial class NameForm : Form
     {
 
-        #region Attributes
-
-        string _name;
+        #region Fields
 
         #endregion
 
         #region Properties
 
-        public string PlayerName { get { return _name; } set { _name = value; } }
+        public string PlayerName { get; set; }
 
         #endregion
 
@@ -30,7 +21,7 @@ namespace Tetris.Forms
         public NameForm()
         {
             InitializeComponent();
-            _name = txtName.Text;
+            PlayerName = txtName.Text;
         }
 
         #endregion
@@ -46,7 +37,7 @@ namespace Tetris.Forms
 
         private void name_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if (!Char.IsLetter(e.KeyChar) && !Char.IsControl(e.KeyChar) && !Char.IsWhiteSpace(e.KeyChar))
+            if (!char.IsLetter(e.KeyChar) && !char.IsControl(e.KeyChar) && !char.IsWhiteSpace(e.KeyChar))
                 e.Handled = true;
         }
 

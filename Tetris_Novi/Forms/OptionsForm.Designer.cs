@@ -1,11 +1,14 @@
-﻿namespace Tetris.Forms
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Tetris.Forms
 {
     partial class OptionsForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -96,9 +99,9 @@
 
         #endregion
 
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button Default;
-        private System.Windows.Forms.Button btnOK;
-        private System.Windows.Forms.PropertyGrid propertyGrid;
+        private Panel panel1;
+        private Button Default;
+        private Button btnOK;
+        private PropertyGrid propertyGrid;
     }
 }

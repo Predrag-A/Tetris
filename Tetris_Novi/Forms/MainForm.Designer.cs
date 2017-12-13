@@ -1,11 +1,15 @@
-﻿namespace Tetris
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+using Tetris.User_control;
+
+namespace Tetris
 {
     partial class MainForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -29,7 +33,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
+            var resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
             this.preview = new System.Windows.Forms.PictureBox();
             this.msMeniIgrice = new System.Windows.Forms.MenuStrip();
             this.igraToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -257,25 +261,25 @@
         }
 
         #endregion
-        private System.Windows.Forms.PictureBox preview;
-        private System.Windows.Forms.MenuStrip msMeniIgrice;
-        private System.Windows.Forms.ToolStripMenuItem igraToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem newGameToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pauseToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
-        private System.Windows.Forms.Timer timerDrop;
-        private User_control.TetrisControl TC;
-        private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-        private System.Windows.Forms.ToolStripMenuItem leaderboardToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem settingsToolStripMenuItem;
-        private System.Windows.Forms.Panel panel;
-        private System.Windows.Forms.Label lblTime;
-        private System.Windows.Forms.Label lblLevel;
-        private System.Windows.Forms.Timer timerGame;
-        private System.Windows.Forms.Label lblScore;
-        private System.Windows.Forms.Label lblPause;
-        private System.Windows.Forms.Label lblNext;
-        private System.Windows.Forms.ToolStripMenuItem endGameToolStripMenuItem;
+        private PictureBox preview;
+        private MenuStrip msMeniIgrice;
+        private ToolStripMenuItem igraToolStripMenuItem;
+        private ToolStripMenuItem newGameToolStripMenuItem;
+        private ToolStripMenuItem pauseToolStripMenuItem;
+        private ToolStripMenuItem exitToolStripMenuItem;
+        private Timer timerDrop;
+        private TetrisControl TC;
+        private ToolStripSeparator toolStripSeparator1;
+        private ToolStripMenuItem leaderboardToolStripMenuItem;
+        private ToolStripMenuItem settingsToolStripMenuItem;
+        private Panel panel;
+        private Label lblTime;
+        private Label lblLevel;
+        private Timer timerGame;
+        private Label lblScore;
+        private Label lblPause;
+        private Label lblNext;
+        private ToolStripMenuItem endGameToolStripMenuItem;
     }
 }
 

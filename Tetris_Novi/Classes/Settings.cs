@@ -1,41 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Drawing;
-using System.Linq;
-using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
-using Tetris.Klase;
 
 namespace Tetris.Classes
 {
     public class Settings
     {
 
-        #region Attributes        
-        
-        Color lineColor;
-        Color smallSquareColor;
-        Color crossColor;
-        Color squareColor;
-        Color triangleColor;
+        #region Fields        
 
-        
-        Color tetrisBorder;
-        Color tetrisBackground;
-        
-        Keys leftKey;
-        Keys rightKey;
-        Keys downKey;
-        Keys rotateKey;
-        Keys pauseKey;
-        
-        int squareWidth;
-        int columns;
-        int rows;
-        byte startLevel;
+        int _squareWidth;
+        int _columns;
+        int _rows;
+        byte _startLevel;
 
         #endregion
 
@@ -48,26 +25,26 @@ namespace Tetris.Classes
 
         public Settings(Settings s)
         {
-            crossColor = s.crossColor;
-            lineColor = s.lineColor;
-            squareColor = s.squareColor;
-            triangleColor = s.triangleColor;
-            smallSquareColor = s.smallSquareColor;
+            CrossColor = s.CrossColor;
+            LineColor = s.LineColor;
+            BigSquareColor = s.BigSquareColor;
+            TriangleColor = s.TriangleColor;
+            SmallSquareColor = s.SmallSquareColor;
 
-            tetrisBorder = s.tetrisBorder;
-            tetrisBackground = s.tetrisBackground;
+            TetrisBorder = s.TetrisBorder;
+            TetrisBackground = s.TetrisBackground;
 
-            leftKey = s.leftKey;
-            rightKey = s.rightKey;
-            downKey = s.downKey;
-            rotateKey = s.rotateKey;
-            pauseKey = s.pauseKey;
+            LeftKey = s.LeftKey;
+            RightKey = s.RightKey;
+            DownKey = s.DownKey;
+            RotateKey = s.RotateKey;
+            PauseKey = s.PauseKey;
 
-            squareWidth = s.squareWidth;
-            columns = s.columns;
-            rows = s.rows;
+            _squareWidth = s._squareWidth;
+            _columns = s._columns;
+            _rows = s._rows;
 
-            startLevel = s.startLevel;
+            _startLevel = s._startLevel;
         }
 
 
@@ -78,138 +55,68 @@ namespace Tetris.Classes
         //Sets the default settings
         public void Default()
         {
-            crossColor = Color.Purple;
-            lineColor = Color.Blue;
-            squareColor = Color.DarkGreen;
-            triangleColor = Color.Red;
-            smallSquareColor = Color.Orange;
+            CrossColor = Color.Purple;
+            LineColor = Color.Blue;
+            BigSquareColor = Color.DarkGreen;
+            TriangleColor = Color.Red;
+            SmallSquareColor = Color.Orange;
 
-            tetrisBorder = Color.DarkMagenta;
-            tetrisBackground = Color.Black;
+            TetrisBorder = Color.DarkMagenta;
+            TetrisBackground = Color.Black;
 
-            leftKey = Keys.Left;
-            rightKey = Keys.Right;
-            downKey = Keys.Down;
-            rotateKey = Keys.Up;
-            pauseKey = Keys.P;
+            LeftKey = Keys.Left;
+            RightKey = Keys.Right;
+            DownKey = Keys.Down;
+            RotateKey = Keys.Up;
+            PauseKey = Keys.P;
 
-            squareWidth = 30;
-            columns = 10;
-            rows = 20;
+            _squareWidth = 30;
+            _columns = 10;
+            _rows = 20;
 
-            startLevel = 1;
+            _startLevel = 1;
         }
         
         #endregion
 
         #region Properties
 
-        #region Colors Properties
+        #region Color Properties
 
         [Category("Figure Colors")]
         [DisplayName("Small Square Color")]
         [Description("The Small square figure back color")]
-        public Color SmallSquareColor
-        {
-            get
-            {
-                return smallSquareColor;
-            }
-            set
-            {
-                smallSquareColor = value;
-            }
-        }
+        public Color SmallSquareColor { get; set; }
 
         [Category("Figure Colors")]
         [DisplayName("Cross Color")]
         [Description("The Cross figure back color")]
-        public Color CrossColor
-        {
-            get
-            {
-                return crossColor;
-            }
-            set
-            {
-                crossColor = value;
-            }
-        }
+        public Color CrossColor { get; set; }
 
         [Category("Figure Colors")]
         [DisplayName("Big Square Color")]
         [Description("The Big Square figure back color")]
-        public Color BigSquareColor
-        {
-            get
-            {
-                return squareColor;
-            }
-            set
-            {
-                squareColor = value;
-            }
-        }
+        public Color BigSquareColor { get; set; }
 
         [Category("Figure Colors")]
         [DisplayName("Line Color")]
         [Description("The Line figure back color")]
-        public Color LineColor
-        {
-            get
-            {
-                return lineColor;
-            }
-            set
-            {
-                lineColor = value;
-            }
-        }
+        public Color LineColor { get; set; }
 
         [Category("Figure Colors")]
         [DisplayName("Triangle Color")]
         [Description("The Triangle figure back color")]
-        public Color TriangleColor
-        {
-            get
-            {
-                return triangleColor;
-            }
-            set
-            {
-                triangleColor = value;
-            }
-        }
+        public Color TriangleColor { get; set; }
 
         [Category("Tetris Colors")]
         [DisplayName("Square Border Color")]
-        [Description("Color of the border of tetris squares")]
-        public Color TetrisBorder
-        {
-            get
-            {
-                return tetrisBorder;
-            }
-            set
-            {
-                tetrisBorder = value;
-            }
-        }        
+        [Description("Color of the border of Tetris squares")]
+        public Color TetrisBorder { get; set; }
 
         [Category("Tetris Colors")]
         [DisplayName("Tetris Background Color")]
-        [Description("Color of the tetris grid background")]
-        public Color TetrisBackground
-        {
-            get
-            {
-                return tetrisBackground;
-            }
-            set
-            {
-                tetrisBackground = value;
-            }
-        }
+        [Description("Color of the Tetris grid background")]
+        public Color TetrisBackground { get; set; }
 
         #endregion
 
@@ -218,136 +125,77 @@ namespace Tetris.Classes
         [Category("Keyboard")]
         [DisplayName("Left Key")]
         [Description("The key value for moving figures left")]
-        public Keys LeftKey
-        {
-            get
-            {
-                return leftKey;
-            }
-            set
-            {
-                leftKey = value;
-            }
-        }
+        public Keys LeftKey { get; set; }
 
         [Category("Keyboard")]
         [DisplayName("Right Key")]
         [Description("The key value for moving figures right")]
-        public Keys RightKey
-        {
-            get
-            {
-                return rightKey;
-            }
-            set
-            {
-                rightKey = value;
-            }
-        }
+        public Keys RightKey { get; set; }
 
         [Category("Keyboard")]
         [DisplayName("Down Key")]
         [Description("The key value for moving figures down")]
-        public Keys DownKey
-        {
-            get
-            {
-                return downKey;
-            }
-            set
-            {
-                downKey = value;
-            }
-        }
+        public Keys DownKey { get; set; }
 
         [Category("Keyboard")]
         [DisplayName("Rotate Key")]
         [Description("The key value for rotating figures")]
-        public Keys RotateKey
-        {
-            get
-            {
-                return rotateKey;
-            }
-            set
-            {
-                rotateKey = value;
-            }
-        }
+        public Keys RotateKey { get; set; }
 
         [Category("Keyboard")]
         [DisplayName("Pause Key")]
         [Description("The key value for pausing game")]
-        public Keys PauseKey
-        {
-            get
-            {
-                return pauseKey;
-            }
-            set
-            {
-                pauseKey = value;
-            }
-        }
+        public Keys PauseKey { get; set; }
 
         #endregion
 
         #region Size Properties
 
         [Category("Dimensions")]
-        [Description("The width(height) of a single square in the tetris grid. Varies from 10 to 30")]
+        [Description("The width(height) of a single square in the Tetris grid. Varies from 10 to 30")]
         [DefaultValue(20)]
         public int Size
         {
-            get
-            {
-                return squareWidth;
-            }
+            get => _squareWidth;
             set
             {
                 if (value > 30 || value < 10)
                     return;
-                if (squareWidth == value)
+                if (_squareWidth == value)
                     return;
-                squareWidth = value;
+                _squareWidth = value;
             }
         }
 
         [Category("Dimensions")]
-        [Description("The number of columns in the tetris grid. Varies from 10 to 20")]
+        [Description("The number of columns in the Tetris grid. Varies from 10 to 20")]
         [DefaultValue(10)]
         public int Columns
         {
-            get
-            {
-                return columns;
-            }
+            get => _columns;
             set
             {
                 if (value > 20 || value < 10)
                     return;
-                if (columns == value)
+                if (_columns == value)
                     return;
-                columns = value;
+                _columns = value;
             }
         }
 
         [Category("Dimensions")]
-        [Description("The number of rows in the tetris grid. Varies from 15 to 30")]
+        [Description("The number of rows in the Tetris grid. Varies from 15 to 30")]
         [DefaultValue(20)]
         public int Rows
         {
-            get
-            {
-                return rows;
-            }
+            get => _rows;
             set
             {
                 if (value > 30 || value < 15)
                     return;
-                if (rows == value)
+                if (_rows == value)
                     return;
-                rows = value;
+                _rows = value;
             }
         }
 
@@ -359,15 +207,12 @@ namespace Tetris.Classes
         [Description("The start level. Varies from 1 to 12")]
         public byte StartLevel
         {
-            get
-            {
-                return startLevel;
-            }
+            get => _startLevel;
             set
             {
                 if (value > 12 || value < 1)
                     return;
-                startLevel = value;
+                _startLevel = value;
             }
         }
 

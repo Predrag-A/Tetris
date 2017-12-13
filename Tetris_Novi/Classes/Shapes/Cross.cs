@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Tetris.Klase
+﻿namespace Tetris.Klase
 {
     public class Cross:Shape
     {
@@ -13,9 +7,9 @@ namespace Tetris.Klase
 
         public Cross(int n):base(n,Grid.Instance.Settings.CrossColor)
         {
-            for (int i = 0; i < Dim; i++)
+            for (var i = 0; i < Dim; i++)
                 Matrix[i,n / 2] = true;
-            for(int i=0;i<n;i++)
+            for(var i=0;i<n;i++)
             {
                 Matrix[n / 2,i] = true;
             }

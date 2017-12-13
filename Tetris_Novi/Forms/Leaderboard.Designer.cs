@@ -1,11 +1,14 @@
-﻿namespace Tetris.Forms
+﻿using System.ComponentModel;
+using System.Windows.Forms;
+
+namespace Tetris.Forms
 {
     partial class LeaderboardForm
     {
         /// <summary>
         /// Required designer variable.
         /// </summary>
-        private System.ComponentModel.IContainer components = null;
+        private IContainer components = null;
 
         /// <summary>
         /// Clean up any resources being used.
@@ -97,9 +100,9 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView data;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button1;
+        private DataGridView data;
+        private Panel panel1;
+        private Button button2;
+        private Button button1;
     }
 }
