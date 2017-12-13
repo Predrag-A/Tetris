@@ -55,6 +55,8 @@ namespace Tetris.Classes
         //Used for XML deserialization
         public void Deserialize(string fileName)
         {
+            if (!File.Exists(fileName)) return;
+
             PlayerList p;
             var serializer = new XmlSerializer(typeof(PlayerList));
             using (var reader = XmlReader.Create(fileName))
